@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterTest.Web", "HeadHunterTest.Web\HeadHunterTest.Web.csproj", "{D4DE3113-BD82-4BA5-9054-0BE88D5D08AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterTest.Domain.Entities", "HeadHunterTest.Domain.Entities\HeadHunterTest.Domain.Entities.csproj", "{0BE7545A-6CDF-4565-91ED-372CC2FE59A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterTest.Database", "HeadHunterTest.Database\HeadHunterTest.Database.csproj", "{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D4DE3113-BD82-4BA5-9054-0BE88D5D08AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4DE3113-BD82-4BA5-9054-0BE88D5D08AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4DE3113-BD82-4BA5-9054-0BE88D5D08AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE7545A-6CDF-4565-91ED-372CC2FE59A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE7545A-6CDF-4565-91ED-372CC2FE59A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE7545A-6CDF-4565-91ED-372CC2FE59A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE7545A-6CDF-4565-91ED-372CC2FE59A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
