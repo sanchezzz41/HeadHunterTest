@@ -35,6 +35,18 @@ namespace HeadHunterTest.Domain.Entities
         public string Email { get; set; }
 
         /// <summary>
+        /// Cоль для пароля
+        /// </summary>
+        [Required]
+        public string PasswordSalt { get; set; }
+
+        /// <summary>
+        /// Хэш пароля
+        /// </summary>
+        [Required]
+        public string PasswordHash { get; set; }
+
+        /// <summary>
         /// Номер телефона пользователя
         /// </summary>
         [Required]

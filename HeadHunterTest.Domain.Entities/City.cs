@@ -39,5 +39,16 @@ namespace HeadHunterTest.Domain.Entities
         /// Список резюме в текущем городе
         /// </summary>
         public virtual List<Resume> Resumes { get; set; }
+
+        public City()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public City(string name)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+        }
     }
 }

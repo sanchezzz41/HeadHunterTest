@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HeadHunterTest.Database\HeadHunterTest.Database.csproj" />
+    <ProjectReference Include="..\HeadHunterTest.Domain.Entities\HeadHunterTest.Domain.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

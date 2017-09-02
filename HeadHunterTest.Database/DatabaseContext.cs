@@ -6,10 +6,14 @@ namespace HeadHunterTest.Database
     /// <summary>
     /// Контекст базы данных для HHT
     /// </summary>
-    public class DatabaseContext:DbContext
+    public class DatabaseContext : DbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> opt):base(opt)
-        { }
+        public DatabaseContext(DbContextOptions<DatabaseContext> opt) : base(opt)
+        {
+        }
+
+        public DbSet<User> Users { get; set; }
+
 
         public DbSet<Employer> Employers { get; set; }
         public DbSet<Vacancies> Vacancieses { get; set; }
@@ -24,5 +28,11 @@ namespace HeadHunterTest.Database
 
         public DbSet<ProfessionalArea> ProfessionalAreas { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

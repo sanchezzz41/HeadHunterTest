@@ -25,5 +25,16 @@ namespace HeadHunterTest.Domain.Entities
         /// Список пользователей
         /// </summary>
         public virtual List<User> Users { get; set; }
+
+        public Role()
+        {
+
+        }
+
+        public Role(RolesOption id, string roleName)
+        {
+            Id = id;
+            RoleName = roleName;
+        }
     }
 }

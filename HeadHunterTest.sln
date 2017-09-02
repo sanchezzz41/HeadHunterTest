@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterTest.Web", "HeadHunterTest.Web\HeadHunterTest.Web.csproj", "{D4DE3113-BD82-4BA5-9054-0BE88D5D08AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterTest.Web", "HeadHunterTest.Web\HeadHunterTest.Web.csproj", "{D4DE3113-BD82-4BA5-9054-0BE88D5D08AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterTest.Domain.Entities", "HeadHunterTest.Domain.Entities\HeadHunterTest.Domain.Entities.csproj", "{0BE7545A-6CDF-4565-91ED-372CC2FE59A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterTest.Domain.Entities", "HeadHunterTest.Domain.Entities\HeadHunterTest.Domain.Entities.csproj", "{0BE7545A-6CDF-4565-91ED-372CC2FE59A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterTest.Database", "HeadHunterTest.Database\HeadHunterTest.Database.csproj", "{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterTest.Database", "HeadHunterTest.Database\HeadHunterTest.Database.csproj", "{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterTest.Domain", "HeadHunterTest.Domain\HeadHunterTest.Domain.csproj", "{5BFA6D6B-1A41-43B5-A483-7C0BFB8C1398}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterTest.Identity", "HeadHunterTest.Identity\HeadHunterTest.Identity.csproj", "{ACC61242-42D9-44A6-8991-306DC0F4014C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B554EE97-6F13-4A1D-B471-6A0E3DA4CA98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BFA6D6B-1A41-43B5-A483-7C0BFB8C1398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BFA6D6B-1A41-43B5-A483-7C0BFB8C1398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BFA6D6B-1A41-43B5-A483-7C0BFB8C1398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BFA6D6B-1A41-43B5-A483-7C0BFB8C1398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACC61242-42D9-44A6-8991-306DC0F4014C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC61242-42D9-44A6-8991-306DC0F4014C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC61242-42D9-44A6-8991-306DC0F4014C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC61242-42D9-44A6-8991-306DC0F4014C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

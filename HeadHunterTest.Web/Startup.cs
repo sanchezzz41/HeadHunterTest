@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AstralTest.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using HeadHunterTest.Database;
+using HeadHunterTest.Domain.Entities;
+using HeadHunterTest.Domain.Interfaces;
+using HeadHunterTest.Domain.Services;
+using HeadHunterTest.Identity;
+using Microsoft.AspNetCore.Identity;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace HeadHunterTest.Web
 {
@@ -29,6 +36,19 @@ namespace HeadHunterTest.Web
             services.AddDbContext<DatabaseContext>(x => x.UseNpgsql
             (Configuration.GetConnectionString("ConnectionToPsql"),
                 a => a.MigrationsAssembly("HeadHunterTest.Web")));
+
+            services.AddIdentity<User,Role>()
+                .AddRoleStore<RoleStore>()
+                .AddUserStore<IdentityStore>()
+                .AddPasswordValidator<Md5PasswordValidator>()
+                .AddDefaultTokenProviders();
+
+            services.AddTransient<IUserService, UserService>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,8 +58,19 @@ namespace HeadHunterTest.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            app.UseMvcWithDefaultRoute();
+            //app.ApplicationServices.GetService<DatabaseContext>().Database.Migrate();
+            //app.ApplicationServices.GetService<DatabaseContext>().Initialize(app.ApplicationServices).Wait();
         }
     }
 }

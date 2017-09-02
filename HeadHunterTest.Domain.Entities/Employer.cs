@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HeadHunterTest.Domain.Entities
 {
     /// <summary>
     /// Работодатель
     /// </summary>
+    //[Table("Employers")]
     public class Employer : User
     {
         /// <summary>
