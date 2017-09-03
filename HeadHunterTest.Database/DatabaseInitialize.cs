@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 
 namespace HeadHunterTest.Database
 {
@@ -14,7 +12,7 @@ namespace HeadHunterTest.Database
     /// </summary>
     public static class DatabaseInitialize
     {
-        public static async Task Initialize(this DatabaseContext context, IServiceProvider services)
+        public static async Task Initialize(this DatabaseContext context, IServiceProvider services, IPasswordHasher<User> hasher)
         {
             //Иницилизация ролей
             {
@@ -63,14 +61,18 @@ namespace HeadHunterTest.Database
 
                 if (admin == null)
                 {
+                    var hashProvider = hasher;
+                    var passwordSalt = "uigu93gtuh";
+                    var resultHash = hashProvider.HashPassword(null, "admin" + passwordSalt);
+
                     admin = new User
                     {
                         Id = Guid.NewGuid(),
                         IdCity = moscowCity.Id,
-                        Email = "admin@mail.com",
+                        Email = "admin@gmail.com",
                         Name = "admin",
-                        PasswordSalt = "adminSalt",
-                        PasswordHash = "adminHash",
+                        PasswordSalt = passwordSalt,
+                        PasswordHash = resultHash,
                         PhoneNumber = "adminNumber",
                         RoleId = RolesOption.Admin,
                         SurName = "adminSurName"

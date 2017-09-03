@@ -30,7 +30,13 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <param name="jobSeekerModel">Модель соискателя для добавления</param>
         /// <returns></returns>
         Task<Guid> AddAsync(JobSeekerRegisterModel jobSeekerModel);
-        //Task<Guid> AddAsync(User us);
+
+        /// <summary>
+        /// Добавляет нанимателя в хранилище
+        /// </summary>
+        /// <param name="employerModel"></param>
+        /// <returns></returns>
+        Task<Guid> AddAsync(EmployerRegisterModel employerModel);
 
         /// <summary>
         /// Удаляет пользователя по id

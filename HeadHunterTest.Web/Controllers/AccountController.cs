@@ -13,7 +13,6 @@ namespace HeadHunterTest.Web.Controllers
     /// Контроллер для регистрации, входа и выхода с сайта
     /// </summary>
     [Route("Account")]
-    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
@@ -42,6 +41,12 @@ namespace HeadHunterTest.Web.Controllers
             return await _userService.AddAsync(model);
         }
 
+        [HttpPost("Employer")]
+        public async Task<object> RegisterEmployer([FromBody] EmployerRegisterModel model)
+        {
+            return await _userService.AddAsync(model);
+        }
+
         [HttpPost("Login")]
         public async Task<object> Login([FromBody] LoginModel model)
         {
@@ -56,6 +61,7 @@ namespace HeadHunterTest.Web.Controllers
 
 
         [Authorize]
+        [HttpDelete]
         public async Task<object> LogOff()
         {
             await _signInManager.SignOutAsync();

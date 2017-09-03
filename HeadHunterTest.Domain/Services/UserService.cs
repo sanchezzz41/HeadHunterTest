@@ -12,12 +12,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HeadHunterTest.Domain.Services
 {
+    /// <inheritdoc />
     /// <summary>
     /// Реализация интерфейса IUserService
     /// </summary>
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
-
 
         private readonly DatabaseContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
@@ -34,11 +34,7 @@ namespace HeadHunterTest.Domain.Services
         {
             _context = context;
             _passwordHasher = passwordHasher;
-            _context.Initialize(null).Wait();
-        }
-        public async Task<Guid> Add(User us)
-        {
-           return Guid.NewGuid();
+            _context.Initialize(null,_passwordHasher).Wait();
         }
 
         /// <summary>
@@ -48,8 +44,8 @@ namespace HeadHunterTest.Domain.Services
         /// <returns>Id нового пользователя</returns>
         public async Task<Guid> AddAsync(UserRegisterModel userModel)
         {
-       
-            var resultUser  =await GetUser(userModel);
+
+            var resultUser = await GetUser(userModel);
 
             await _context.Users.AddAsync(resultUser);
 
@@ -68,12 +64,30 @@ namespace HeadHunterTest.Domain.Services
             var user = await GetUser(jobSeekerModel);
 
             var resultJobSeeker = new JobSeeker(user.Name, user.SurName, user.Email, user.PhoneNumber,
-                user.PasswordSalt, user.PasswordHash,user.IdCity,
+                user.PasswordSalt, user.PasswordHash, user.IdCity,
                 jobSeekerModel.DateOfBirth, jobSeekerModel.Citizenship);
 
             await _context.JobSeekers.AddAsync(resultJobSeeker);
             await _context.SaveChangesAsync();
             return resultJobSeeker.Id;
+        }
+
+        /// <summary>
+        /// Добавляет нанимателя в хранилище
+        /// </summary>
+        /// <param name="employerModel"></param>
+        /// <returns></returns>
+        public async Task<Guid> AddAsync(EmployerRegisterModel employerModel)
+        {
+            var user = await GetUser(employerModel);
+
+            var resultEmployer = new Employer(user.Name, user.SurName, user.Email, user.PhoneNumber,
+                user.PasswordSalt, user.PasswordHash, user.IdCity,
+                employerModel.NameCompany, employerModel.WebSite);
+
+            await _context.Employers.AddAsync(resultEmployer);
+            await _context.SaveChangesAsync();
+            return resultEmployer.Id;
         }
 
         /// <summary>
@@ -83,6 +97,13 @@ namespace HeadHunterTest.Domain.Services
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
+            var resultUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            if (resultUser == null)
+            {
+                throw new NullReferenceException($"Пользователя с {id} не существует!");
+            }
+            _context.Users.Remove(resultUser);
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -92,8 +113,8 @@ namespace HeadHunterTest.Domain.Services
         public async Task<List<User>> GetAsync()
         {
             return await _context.Users
-                .Include(x=>x.City)
-                .Include(x=>x.Role)
+                .Include(x => x.City)
+                .Include(x => x.Role)
                 .ToListAsync();
         }
 

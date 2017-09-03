@@ -42,11 +42,13 @@ namespace HeadHunterTest.Domain.Entities
         /// <param name="phoneNumber">Номер телефона</param>
         /// <param name="passwordSalt">Солья для пароля</param>
         /// <param name="passwordHash">Хэш пароля</param>
+        /// <param name="idCity">Id города</param>
         /// <param name="dateOfBirth">День рождения</param>
         /// <param name="citizenship">Гражданство</param>
         public JobSeeker(string name, string surName, string email, string phoneNumber, string passwordSalt,
-            string passwordHash,Guid idCity, DateTime dateOfBirth, string citizenship) : base(name, surName, email, phoneNumber,
-            passwordSalt, passwordHash, RolesOption.JobSeeker,idCity)
+            string passwordHash, Guid idCity, DateTime dateOfBirth, string citizenship)
+            : base(name, surName, email, phoneNumber,
+                passwordSalt, passwordHash, RolesOption.JobSeeker, idCity)
         {
             DateOfBirth = dateOfBirth;
             Citizenship = citizenship;
