@@ -11,10 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using HeadHunterTest.Database;
+using HeadHunterTest.Domain;
 using HeadHunterTest.Domain.Entities;
 using HeadHunterTest.Domain.Interfaces;
 using HeadHunterTest.Domain.Services;
 using HeadHunterTest.Identity;
+using HeadHunterTest.Web.Extension;
 using Microsoft.AspNetCore.Identity;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -32,7 +34,10 @@ namespace HeadHunterTest.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(x =>
+            {
+                x.Filters.Add(typeof(ErrorFilter));
+            });
             services.AddDbContext<DatabaseContext>(x => x.UseNpgsql
             (Configuration.GetConnectionString("ConnectionToPsql"),
                 a => a.MigrationsAssembly("HeadHunterTest.Web")));
@@ -43,7 +48,10 @@ namespace HeadHunterTest.Web
                 .AddPasswordValidator<Md5PasswordValidator>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IUserService, UserService>();
+            services.AddDomainServices();
+
+            services.AddSingleton<IHashProvider, Md5HashService>();
+            services.AddSingleton<IPasswordHasher<User>, Md5PasswordHasher>();
 
             services.AddSwaggerGen(c =>
             {

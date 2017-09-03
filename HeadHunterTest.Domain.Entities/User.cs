@@ -73,5 +73,35 @@ namespace HeadHunterTest.Domain.Entities
         /// Город,в котором совершаются действия
         /// </summary>
         public City City { get; set; }
+
+        public User()
+        {
+            Id=Guid.NewGuid();
+        }
+
+        /// <summary>
+        /// Иницилизация пользователя
+        /// </summary>
+        /// <param name="name">Имя</param>
+        /// <param name="surName">Фамилия</param>
+        /// <param name="email">Email</param>
+        /// <param name="phoneNumber">Номер телефона</param>
+        /// <param name="passwordSalt">Солья для пароля</param>
+        /// <param name="passwordHash">Хэш пароля</param>
+        /// <param name="role">Роль</param>
+        /// <param name="idCity">Id города</param>
+        public User(string name, string surName, string email, string phoneNumber, string passwordSalt,
+            string passwordHash,RolesOption role,Guid idCity)
+        {
+            Id=Guid.NewGuid();
+            Name = name;
+            SurName = surName;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            PasswordSalt = passwordSalt;
+            PasswordHash = passwordHash;
+            RoleId = role;
+            IdCity = idCity;
+        }
     }
 }

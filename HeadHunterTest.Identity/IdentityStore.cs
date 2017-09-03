@@ -165,7 +165,7 @@ namespace AstralTest.Identity
         /// <returns></returns>
         public Task<string> GetUserNameAsync(User user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.Name);
+            return Task.FromResult(user.Email);
         }
         /// <summary/>
         public Task SetUserNameAsync(User user, string userName, CancellationToken cancellationToken)
@@ -180,7 +180,7 @@ namespace AstralTest.Identity
         /// <returns></returns>
         public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.Name.ToUpper());
+            return Task.FromResult(user.Email.ToUpper());
         }
         /// <summary/>
         public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
@@ -200,7 +200,7 @@ namespace AstralTest.Identity
             return user;
         }
         /// <summary>
-        /// Нахождение пользователя по имени
+        /// Нахождение пользователя по Email
         /// </summary>
         /// <param name="normalizedUserName">Нормализованное имя пользователя</param>
         /// <param name="cancellationToken"></param>
@@ -208,7 +208,7 @@ namespace AstralTest.Identity
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             normalizedUserName = normalizedUserName.ToUpper();
-            var user = await _context.Users.FirstOrDefaultAsync(a => a.Name.ToUpper() == normalizedUserName, cancellationToken);
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Email.ToUpper() == normalizedUserName, cancellationToken);
             return user;
         }
         /// <summary>
