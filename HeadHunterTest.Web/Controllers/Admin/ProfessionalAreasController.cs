@@ -29,9 +29,9 @@ namespace HeadHunterTest.Web.Controllers.Admin
 
         //Добавление професии
         [HttpPost]
-        public async Task<object> Add([FromBody] ProfessionalAreaModel model)
+        public async Task<object> Add([FromBody] ProfessionalAreaModel profModel)
         {
-            return await _professionalAreaService.AddAsync(model);
+            return await _professionalAreaService.AddAsync(profModel);
         }
 
         //Удаление професии
@@ -43,17 +43,17 @@ namespace HeadHunterTest.Web.Controllers.Admin
 
         //Изменение професии
         [HttpPut]
-        public async Task Edit([FromBody] ProfessionalAreaModel model, [FromQuery]Guid idProf)
+        public async Task Edit([FromBody] ProfessionalAreaModel profModel, [FromQuery]Guid idProf)
         {
-            await _professionalAreaService.EditAsync(idProf, model);
+            await _professionalAreaService.EditAsync(idProf, profModel);
         }
 
         //Возвращение всех професий
         [HttpGet]
         public async Task<object> Get()
         {
-            var resultProfs = await _professionalAreaService.GetAsync();
-            return resultProfs.Select(x => x?.ProfView());
+            var profList = await _professionalAreaService.GetAsync();
+            return profList.Select(x => x?.ProfView());
         }
     }
 }
