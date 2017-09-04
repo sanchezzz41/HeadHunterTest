@@ -18,7 +18,6 @@ namespace HeadHunterTest.Domain.Services
     /// </summary>
     public class UserService : IUserService
     {
-
         private readonly DatabaseContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
 
@@ -44,15 +43,13 @@ namespace HeadHunterTest.Domain.Services
         /// <returns>Id нового пользователя</returns>
         public async Task<Guid> AddAsync(UserRegisterModel userModel)
         {
-
             var resultUser = await GetUser(userModel);
 
             await _context.Users.AddAsync(resultUser);
+            await _context.SaveChangesAsync();
 
             return resultUser.Id;
         }
-
-
 
         /// <summary>
         /// Добавляет соискателя в хранилище
@@ -69,6 +66,7 @@ namespace HeadHunterTest.Domain.Services
 
             await _context.JobSeekers.AddAsync(resultJobSeeker);
             await _context.SaveChangesAsync();
+
             return resultJobSeeker.Id;
         }
 
@@ -87,6 +85,7 @@ namespace HeadHunterTest.Domain.Services
 
             await _context.Employers.AddAsync(resultEmployer);
             await _context.SaveChangesAsync();
+
             return resultEmployer.Id;
         }
 
@@ -103,6 +102,7 @@ namespace HeadHunterTest.Domain.Services
                 throw new NullReferenceException($"Пользователя с {id} не существует!");
             }
             _context.Users.Remove(resultUser);
+
             await _context.SaveChangesAsync();
         }
 

@@ -19,6 +19,8 @@ namespace HeadHunterTest.Domain
         {
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<IAuthorizationService, AuthorizationService>();
+            service.AddScoped<ICityService, CityService>();
+            service.AddScoped<IProfessionalAreaService, ProfessionalAreaService>();
             return service;
         }
     }

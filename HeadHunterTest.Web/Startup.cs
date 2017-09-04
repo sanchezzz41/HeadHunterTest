@@ -42,7 +42,7 @@ namespace HeadHunterTest.Web
             (Configuration.GetConnectionString("ConnectionToPsql"),
                 a => a.MigrationsAssembly("HeadHunterTest.Web")));
 
-            services.AddIdentity<User,Role>()
+            services.AddIdentity<User, Role>()
                 .AddRoleStore<RoleStore>()
                 .AddUserStore<IdentityStore>()
                 .AddPasswordValidator<Md5PasswordValidator>()
@@ -55,7 +55,7 @@ namespace HeadHunterTest.Web
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info {Title = "My API", Version = "v1"});
             });
         }
 
@@ -78,7 +78,7 @@ namespace HeadHunterTest.Web
 
             app.UseMvcWithDefaultRoute();
             //app.ApplicationServices.GetService<DatabaseContext>().Database.Migrate();
-            //app.ApplicationServices.GetService<DatabaseContext>().Initialize(app.ApplicationServices).Wait();
+            //app.ApplicationServices.GetService<DatabaseContext>().Initialize(app.ApplicationServices, null).Wait();
         }
     }
 }

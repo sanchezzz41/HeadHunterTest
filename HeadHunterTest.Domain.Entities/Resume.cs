@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace HeadHunterTest.Domain.Entities
 {
@@ -22,7 +20,7 @@ namespace HeadHunterTest.Domain.Entities
         /// Зарплата
         /// </summary>
         [Required]
-        public int Salary { get; set; }
+        public uint Salary { get; set; }
 
         /// <summary>
         /// Желаемая должность
@@ -62,5 +60,20 @@ namespace HeadHunterTest.Domain.Entities
         /// Город, в котором размещено резюме
         /// </summary>
         public City ResumeInCity { get; set; }
+
+        public Resume()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Resume(Guid idJobSeeker, Guid idCity, Guid idProfArea, uint salary, string desiredPosition)
+        {
+            Id = Guid.NewGuid();
+            JobSeekerId = idJobSeeker;
+            CityId = idCity;
+            ProfAreaId = idProfArea;
+            Salary = salary;
+            DesiredPosition = desiredPosition;
+        }
     }
 }

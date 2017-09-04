@@ -27,5 +27,20 @@ namespace HeadHunterTest.Domain.Entities
         /// Список резюме
         /// </summary>
         public virtual List<Resume> Resumes { get; set; }
+
+        public ProfessionalArea()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        /// <summary>
+        /// Иницилизирует професию
+        /// </summary>
+        /// <param name="name">Название професии</param>
+        public ProfessionalArea(string name)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+        }
     }
 }

@@ -7,10 +7,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace HeadHunterTest.Identity
 {
-    public class AccessPolicy
-    {
-
-    }
 
     public class RoleStore : IRoleStore<Role>
     {

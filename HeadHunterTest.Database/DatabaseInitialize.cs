@@ -63,13 +63,14 @@ namespace HeadHunterTest.Database
                 {
                     var hashProvider = hasher;
                     var passwordSalt = "uigu93gtuh";
-                    var resultHash = hashProvider.HashPassword(null, "admin" + passwordSalt);
+                    var password = "admin";
+                    var resultHash = hashProvider.HashPassword(null, password + passwordSalt);
 
                     admin = new User
                     {
                         Id = Guid.NewGuid(),
                         IdCity = moscowCity.Id,
-                        Email = "admin@gmail.com",
+                        Email = "admin",
                         Name = "admin",
                         PasswordSalt = passwordSalt,
                         PasswordHash = resultHash,
