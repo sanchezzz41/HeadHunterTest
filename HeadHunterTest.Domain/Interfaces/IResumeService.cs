@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
 using HeadHunterTest.Domain.Models;
@@ -44,6 +45,21 @@ namespace HeadHunterTest.Domain.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<List<Resume>> GetAsync();
+
+        /// <summary>
+        /// Прикрепляет резюме к вакансии
+        /// </summary>
+        /// <param name="idResume">Id резюме</param>
+        /// <param name="idVacancy">Id вакансии</param>
+        /// <returns></returns>
+        Task<Guid> AffixResumeToVacancy(Guid idResume, Guid idVacancy);
+
+        /// <summary>
+        /// Возвращает список вакансий, которые прикриплены к резюме 
+        /// </summary>
+        /// <param name="idResume">Id резюме, вакансии которого будут возвращены</param>
+        /// <returns></returns>
+        Task<List<Vacancy>> GetAttachmentsVacancies(Guid idResume);
 
     }
 }

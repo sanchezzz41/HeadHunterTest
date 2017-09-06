@@ -43,7 +43,7 @@ namespace HeadHunterTest.Domain.Models
         /// <summary>
         /// Роль, к которой принадлежит пользователь
         /// </summary>
-        public RolesOption RoleId { get; set; }
+        public RolesOptions RoleId { get; set; }
 
         /// <summary>
         /// Название города

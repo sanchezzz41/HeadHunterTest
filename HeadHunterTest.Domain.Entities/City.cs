@@ -33,7 +33,7 @@ namespace HeadHunterTest.Domain.Entities
         /// <summary>
         /// Список вакансий в текущем городе
         /// </summary>
-        public virtual List<Vacancies> Vacancieses { get; set; }
+        public virtual List<Vacancy> Vacancieses { get; set; }
 
         /// <summary>
         /// Список резюме в текущем городе

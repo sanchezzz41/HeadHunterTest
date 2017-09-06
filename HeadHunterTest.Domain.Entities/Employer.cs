@@ -26,7 +26,7 @@ namespace HeadHunterTest.Domain.Entities
         /// <summary>
         /// Список вакансий
         /// </summary>
-        public virtual List<Vacancies> Vacancieses { get; set; }
+        public virtual List<Vacancy> Vacancieses { get; set; }
 
         public Employer()
         {
@@ -49,7 +49,7 @@ namespace HeadHunterTest.Domain.Entities
         public Employer(string name, string surName, string email, string phoneNumber, string passwordSalt,
             string passwordHash, Guid idCity, string nameCompany, string webSite)
             : base(name, surName, email, phoneNumber,
-                passwordSalt, passwordHash, RolesOption.Employer, idCity)
+                passwordSalt, passwordHash, RolesOptions.Employer, idCity)
         {
             NameCompany = nameCompany;
             WebSite = webSite;

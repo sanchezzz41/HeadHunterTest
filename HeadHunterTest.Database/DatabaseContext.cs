@@ -16,11 +16,14 @@ namespace HeadHunterTest.Database
 
 
         public DbSet<Employer> Employers { get; set; }
-        public DbSet<Vacancies> Vacancieses { get; set; }
+        public DbSet<Vacancy> Vacancies { get; set; }
 
 
         public DbSet<JobSeeker> JobSeekers { get; set; }
         public DbSet<Resume> Resumes { get; set; }
+
+        public DbSet<ResumeVacancy> ResumeVacancies { get; set; }
+
 
         public DbSet<Role> Roles { get; set; }
 
@@ -31,7 +34,6 @@ namespace HeadHunterTest.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
         }
     }

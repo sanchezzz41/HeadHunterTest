@@ -16,7 +16,7 @@ namespace HeadHunterTest.Web.Controllers.Admin
     /// <summary>
     /// Контроллер для работы с профессиями(доступен только админу)
     /// </summary>
-    [Authorize(Roles = nameof(RolesOption.Admin))]
+    [Authorize(Roles = nameof(RolesOptions.Admin))]
     [Route("Admin/Profs")]
     public class ProfessionalAreasController : Controller
     {

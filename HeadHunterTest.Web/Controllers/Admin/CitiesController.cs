@@ -15,7 +15,7 @@ namespace HeadHunterTest.Web.Controllers.Admin
     /// <summary>
     /// Контроллер для работы с городами(доступен только админу)
     /// </summary>
-    [Authorize(Roles=nameof(RolesOption.Admin))]
+    [Authorize(Roles=nameof(RolesOptions.Admin))]
     [Route("Admin/Cities")]
     public class CitiesController : Controller
     {

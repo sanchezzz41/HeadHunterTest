@@ -16,24 +16,24 @@ namespace HeadHunterTest.Database
         {
             //Иницилизация ролей
             {
-                var roleAdmin = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOption.Admin);
+                var roleAdmin = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOptions.Admin);
                 if (roleAdmin == null)
                 {
-                    roleAdmin = new Role(RolesOption.Admin, nameof(RolesOption.Admin));
+                    roleAdmin = new Role(RolesOptions.Admin, nameof(RolesOptions.Admin));
                     await context.Roles.AddAsync(roleAdmin);
                 }
 
-                var roleJobSeeker = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOption.JobSeeker);
+                var roleJobSeeker = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOptions.JobSeeker);
                 if (roleJobSeeker == null)
                 {
-                    roleJobSeeker = new Role(RolesOption.JobSeeker, nameof(RolesOption.JobSeeker));
+                    roleJobSeeker = new Role(RolesOptions.JobSeeker, nameof(RolesOptions.JobSeeker));
                     await context.Roles.AddAsync(roleJobSeeker);
                 }
 
-                var roleEmp = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOption.Employer);
+                var roleEmp = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOptions.Employer);
                 if (roleEmp == null)
                 {
-                    roleEmp = new Role(RolesOption.Employer, nameof(RolesOption.Employer));
+                    roleEmp = new Role(RolesOptions.Employer, nameof(RolesOptions.Employer));
                     await context.Roles.AddAsync(roleEmp);
                 }
             }
@@ -57,11 +57,11 @@ namespace HeadHunterTest.Database
 
                 //Иницилизация админа
                 var admin = await context.Users.SingleOrDefaultAsync(x =>
-                    x.Name == "admin" && x.RoleId == RolesOption.Admin);
+                    x.Name == "admin" && x.RoleId == RolesOptions.Admin);
 
                 if (admin == null)
                 {
-                    var hashProvider = hasher;
+                    var hashProvider = hasher; //тут поменять когда иницилизация из startup'a запускать будем
                     var passwordSalt = "uigu93gtuh";
                     var password = "admin";
                     var resultHash = hashProvider.HashPassword(null, password + passwordSalt);
@@ -75,7 +75,7 @@ namespace HeadHunterTest.Database
                         PasswordSalt = passwordSalt,
                         PasswordHash = resultHash,
                         PhoneNumber = "adminNumber",
-                        RoleId = RolesOption.Admin,
+                        RoleId = RolesOptions.Admin,
                         SurName = "adminSurName"
                     };
                     await context.Users.AddAsync(admin);

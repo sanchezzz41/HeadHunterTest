@@ -13,9 +13,10 @@ using System;
 namespace HeadHunterTest.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20170905131558_EditVacancy")]
+    partial class EditVacancy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,23 +71,6 @@ namespace HeadHunterTest.Web.Migrations
                     b.HasIndex("ProfAreaId");
 
                     b.ToTable("Resumes");
-                });
-
-            modelBuilder.Entity("HeadHunterTest.Domain.Entities.ResumeVacancy", b =>
-                {
-                    b.Property<Guid>("Id");
-
-                    b.Property<Guid>("ResumeId");
-
-                    b.Property<Guid>("VacancyId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResumeId");
-
-                    b.HasIndex("VacancyId");
-
-                    b.ToTable("ResumeVacancies");
                 });
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.Role", b =>
@@ -204,19 +188,6 @@ namespace HeadHunterTest.Web.Migrations
                     b.HasOne("HeadHunterTest.Domain.Entities.ProfessionalArea", "ProfessionalArea")
                         .WithMany("Resumes")
                         .HasForeignKey("ProfAreaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HeadHunterTest.Domain.Entities.ResumeVacancy", b =>
-                {
-                    b.HasOne("HeadHunterTest.Domain.Entities.Resume", "Resume")
-                        .WithMany()
-                        .HasForeignKey("ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HeadHunterTest.Domain.Entities.Vacancy", "Vacancy")
-                        .WithMany()
-                        .HasForeignKey("VacancyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

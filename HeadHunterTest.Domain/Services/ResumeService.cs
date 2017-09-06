@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Database;
@@ -51,7 +52,7 @@ namespace HeadHunterTest.Domain.Services
             }
 
             var resultCity = await _context.Cities.SingleOrDefaultAsync(x => x.Id == model.CityId);
-            if(resultCity==null)
+            if (resultCity == null)
             {
                 throw new NullReferenceException($"Города с id: {model.CityId} не существует.");
             }
@@ -134,11 +135,57 @@ namespace HeadHunterTest.Domain.Services
         public async Task<List<Resume>> GetAsync()
         {
             return await _context.Resumes
-                .Include(x=>x.JobSeeker)
-                .Include(x=>x.ResumeInCity)
-                .Include(x=>x.ProfessionalArea)
+                .Include(x => x.JobSeeker)
+                .Include(x => x.ResumeInCity)
+                .Include(x => x.ProfessionalArea)
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Прикрепляет резюме к вакансии
+        /// </summary>
+        /// <param name="idResume">Id резюме</param>
+        /// <param name="idVacancy">Id вакансии</param>
+        /// <returns></returns>
+        public async Task<Guid> AffixResumeToVacancy(Guid idResume, Guid idVacancy)
+        {
+            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.Id == idResume);
+            if (resultResume == null)
+            {
+                throw new NullReferenceException($"Резюме с id: {idResume} не существует.");
+            }
+
+            var resultVacancy = await _context.Vacancies.SingleOrDefaultAsync(x => x.Id == idVacancy);
+            if (resultVacancy == null)
+            {
+                throw new NullReferenceException($"Вакансии с id: {idVacancy} не существует.");
+            }
+
+            var resultResVac = new ResumeVacancy(resultResume.Id, resultVacancy.Id);
+
+            await _context.ResumeVacancies.AddAsync(resultResVac);
+            await _context.SaveChangesAsync();
+
+            return resultResVac.Id;
+        }
+
+        /// <summary>
+        /// Возвращает список вакансий, которые прикриплены к резюме 
+        /// </summary>
+        /// <param name="idResume">Id резюме, вакансии которого будут возвращены</param>
+        /// <returns></returns>
+        public async Task<List<Vacancy>> GetAttachmentsVacancies(Guid idResume)
+        {
+            var listResVac = await _context.ResumeVacancies
+                .Include(x => x.Vacancy)
+                .ToListAsync();
+
+            var listVacancies = listResVac
+                .Where(x => x.ResumeId == idResume)
+                .Select(x=>x.Vacancy)
+                .ToList();
+
+            return listVacancies;
         }
     }
 }
-

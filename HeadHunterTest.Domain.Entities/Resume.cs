@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -60,6 +61,11 @@ namespace HeadHunterTest.Domain.Entities
         /// Город, в котором размещено резюме
         /// </summary>
         public City ResumeInCity { get; set; }
+
+        /// <summary>
+        /// Связывыает вакансию и резюме
+        /// </summary>
+        public virtual List<ResumeVacancy> ResumeVacancies { get; set; }
 
         public Resume()
         {

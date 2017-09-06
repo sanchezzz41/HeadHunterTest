@@ -52,7 +52,7 @@ namespace HeadHunterTest.Web.Extension
         /// <returns></returns>
         public static object ResumeAdminView(this Resume resume, HttpContext context)
         {
-            if (!context.User.IsInRole(nameof(RolesOption.Admin)))
+            if (!context.User.IsInRole(nameof(RolesOptions.Admin)))
             {
                 return null;
             }

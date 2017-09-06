@@ -16,7 +16,7 @@ namespace HeadHunterTest.Web.Controllers
     /// <summary>
     /// Контроллер для работы с резюме
     /// </summary>
-    [Authorize(Roles = nameof(RolesOption.JobSeeker))]
+    [Authorize(Roles = nameof(RolesOptions.JobSeeker))]
     [Route("Resumes")]
     public class ResumesController : Controller
     {

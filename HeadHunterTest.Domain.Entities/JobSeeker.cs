@@ -48,7 +48,7 @@ namespace HeadHunterTest.Domain.Entities
         public JobSeeker(string name, string surName, string email, string phoneNumber, string passwordSalt,
             string passwordHash, Guid idCity, DateTime dateOfBirth, string citizenship)
             : base(name, surName, email, phoneNumber,
-                passwordSalt, passwordHash, RolesOption.JobSeeker, idCity)
+                passwordSalt, passwordHash, RolesOptions.JobSeeker, idCity)
         {
             DateOfBirth = dateOfBirth;
             Citizenship = citizenship;

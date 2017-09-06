@@ -3,7 +3,7 @@
     /// <summary>
     /// Перечесление предоставляющие список ролей
     /// </summary>
-    public enum RolesOption
+    public enum RolesOptions
     {
         Admin,
         JobSeeker,

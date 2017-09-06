@@ -29,7 +29,7 @@ namespace HeadHunterTest.Web.Controllers
 
         //Регистрация пользователя, которую может делать только админ
         [HttpPost("User")]
-        [Authorize(Roles = nameof(RolesOption.Admin))]
+        [Authorize(Roles = nameof(RolesOptions.Admin))]
         public async Task<object> RegisterUser([FromBody] UserRegisterModel model)
         {
             return await _userService.AddAsync(model);

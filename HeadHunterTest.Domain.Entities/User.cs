@@ -56,7 +56,7 @@ namespace HeadHunterTest.Domain.Entities
         /// Роль, к которой принадлежит пользователь
         /// </summary>
         [ForeignKey(nameof(Role))]
-        public RolesOption RoleId { get; set; }
+        public RolesOptions RoleId { get; set; }
 
         /// <summary>
         /// Роль
@@ -91,7 +91,7 @@ namespace HeadHunterTest.Domain.Entities
         /// <param name="role">Роль</param>
         /// <param name="idCity">Id города</param>
         public User(string name, string surName, string email, string phoneNumber, string passwordSalt,
-            string passwordHash,RolesOption role,Guid idCity)
+            string passwordHash,RolesOptions role,Guid idCity)
         {
             Id=Guid.NewGuid();
             Name = name;
