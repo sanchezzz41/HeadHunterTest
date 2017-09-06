@@ -8,6 +8,27 @@ namespace HeadHunterTest.Web.Extension
     /// </summary>
     public static class JsonViews
     {
+
+        /// <summary>
+        /// Метод расширения для отображения пользователей
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public static object UserView(this User user)
+        {
+            if (user != null)
+            {
+                return new
+                {
+                    userId = user.Id,
+                    user.Name,
+                    user.PhoneNumber,
+                    Role = nameof(user.RoleId)
+                };
+            }
+            return null;
+        }
+
         /// <summary>
         /// Метод расширения для отображения города
         /// </summary>
@@ -19,7 +40,7 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    city.Id,
+                    cityId = city.Id,
                     city.Name
                 };
             }
@@ -37,7 +58,7 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    prof.Id,
+                    profId = prof.Id,
                     prof.Name
                 };
             }
@@ -60,7 +81,7 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    resume.Id,
+                    resumeid = resume.Id,
                     IdJobSeeker = resume.JobSeeker?.Id,
                     IdCity = resume.ResumeInCity?.Id,
                     IdProf = resume.ProfessionalArea?.Id,
@@ -82,11 +103,33 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
+                    resumeId = resume.Id,
                     resume.JobSeeker?.Name,
-                    CityName = resume.ResumeInCity.Name,
+                    CityName = resume.ResumeInCity?.Name,
                     ProfName = resume.ProfessionalArea?.Name,
                     resume.Salary,
                     resume.DesiredPosition
+                };
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Метод расширения для отображения вакансий
+        /// </summary>
+        /// <param name="vac"></param>
+        /// <returns></returns>
+        public static object VacancyView(this Vacancy vac)
+        {
+            if (vac != null)
+            {
+                return new
+                {
+                    vacancyId = vac.Id,
+                    vac.Employer?.Name,
+                    vac.Employer?.NameCompany,
+                    vac.Description,
+                    CityName = vac.VacanciesInCity?.Name
                 };
             }
             return null;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
@@ -29,7 +28,7 @@ namespace HeadHunterTest.Web.Controllers
 
         //Добавляет резюме
         [HttpPost]
-        public async Task<object> Add([FromBody] ResumeModel resumeModel,[FromQuery] Guid idJobSeeker)
+        public async Task<object> Add([FromBody] ResumeModel resumeModel, [FromQuery] Guid idJobSeeker)
         {
             return await _resumeService.AddAsync(idJobSeeker, resumeModel);
         }
@@ -53,7 +52,22 @@ namespace HeadHunterTest.Web.Controllers
         public async Task<object> Get()
         {
             var resumeList = await _resumeService.GetAsync();
-            return resumeList.Select(x => x.ResumeView());
+            return resumeList.Select(x => x?.ResumeView());
+        }
+
+        //Прикрепляет резюме к вакансии
+        [HttpPost("AttachResume")]
+        public async Task AttachToVacancy([FromQuery] Guid idResume, [FromQuery] Guid idVacancy)
+        {
+            await _resumeService.AffixResumeToVacancy(idResume, idVacancy);
+        }
+
+        //Возвращает список вакансий, которые привязаны к одному резюме
+        [HttpGet("Vacancies")]
+        public async Task<object> GetVacanciByIdResume([FromQuery] Guid idResume)
+        {
+            var list = await _resumeService.GetAttachmentsVacancies(idResume);
+            return list.Select(x => x?.VacancyView());
         }
     }
 }

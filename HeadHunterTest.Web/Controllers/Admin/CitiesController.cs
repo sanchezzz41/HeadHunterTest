@@ -15,11 +15,12 @@ namespace HeadHunterTest.Web.Controllers.Admin
     /// <summary>
     /// Контроллер для работы с городами(доступен только админу)
     /// </summary>
-    [Authorize(Roles=nameof(RolesOptions.Admin))]
+    [Authorize(Roles = nameof(RolesOptions.Admin))]
     [Route("Admin/Cities")]
     public class CitiesController : Controller
     {
         private readonly ICityService _cityService;
+
         public CitiesController(ICityService cityService)
         {
             _cityService = cityService;
@@ -34,16 +35,16 @@ namespace HeadHunterTest.Web.Controllers.Admin
 
         //Удаление города
         [HttpDelete]
-        public async Task Delete([FromQuery]Guid idCity)
+        public async Task Delete([FromQuery] Guid idCity)
         {
-             await _cityService.DeleteAsync(idCity);
+            await _cityService.DeleteAsync(idCity);
         }
 
         //Изменение города
         [HttpPut]
-        public async Task Edit([FromBody] CityModel model,[FromQuery]Guid idCity)
+        public async Task Edit([FromBody] CityModel model, [FromQuery] Guid idCity)
         {
-             await _cityService.EditAsync(idCity,model);
+            await _cityService.EditAsync(idCity, model);
         }
 
         //Возвращение города
@@ -53,6 +54,5 @@ namespace HeadHunterTest.Web.Controllers.Admin
             var resultCities = await _cityService.GetAsync();
             return resultCities.Select(x => x?.CityView());
         }
-
     }
 }

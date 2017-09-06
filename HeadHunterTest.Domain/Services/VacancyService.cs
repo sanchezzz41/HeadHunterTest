@@ -22,6 +22,7 @@ namespace HeadHunterTest.Domain.Services
         public List<Vacancy> Vacancies => _context.Vacancies
             .Include(x => x.VacanciesInCity)
             .Include(x => x.Employer)
+            .Include(x => x.ResumeVacancies)
             .ToList();
 
         private readonly DatabaseContext _context;
@@ -36,7 +37,7 @@ namespace HeadHunterTest.Domain.Services
         /// </summary>
         /// <param name="vacancyModel"></param>
         /// <returns></returns>
-        public async Task<Guid> AddAsync(VacancyModel vacancyModel)
+        public async Task<Guid> AddAsync(Guid idEmployer, VacancyModel vacancyModel)
         {
             if (vacancyModel == null)
             {
@@ -49,13 +50,13 @@ namespace HeadHunterTest.Domain.Services
                 throw new NullReferenceException($"Города с Id:{vacancyModel.CityId} нету.");
             }
 
-            var resultEmp = await _context.Employers.SingleOrDefaultAsync(x => x.Id == vacancyModel.EmployerId);
+            var resultEmp = await _context.Employers.SingleOrDefaultAsync(x => x.Id == idEmployer);
             if (resultEmp == null)
             {
-                throw new NullReferenceException($"Работодателя с Id:{vacancyModel.EmployerId} нету.");
+                throw new NullReferenceException($"Работодателя с Id:{idEmployer} нету.");
             }
 
-            var resultVacancy = new Vacancy(vacancyModel.EmployerId, vacancyModel.CityId, vacancyModel.Description);
+            var resultVacancy = new Vacancy(idEmployer, vacancyModel.CityId, vacancyModel.Description);
 
             await _context.Vacancies.AddAsync(resultVacancy);
             await _context.SaveChangesAsync();
@@ -88,13 +89,6 @@ namespace HeadHunterTest.Domain.Services
                 throw new NullReferenceException($"Города с Id:{newModel.CityId} нету.");
             }
 
-            var resultEmp = await _context.Employers.SingleOrDefaultAsync(x => x.Id == newModel.EmployerId);
-            if (resultEmp == null)
-            {
-                throw new NullReferenceException($"Работодателя с Id:{newModel.EmployerId} нету.");
-            }
-
-            resultVacancy.EmployerId = resultEmp.Id;
             resultVacancy.CityId = resultCity.Id;
             resultVacancy.Description = newModel.Description;
 
@@ -127,6 +121,7 @@ namespace HeadHunterTest.Domain.Services
             return await _context.Vacancies
                 .Include(x => x.VacanciesInCity)
                 .Include(x => x.Employer)
+                .Include(x=>x.ResumeVacancies)
                 .ToListAsync(); 
         }
 

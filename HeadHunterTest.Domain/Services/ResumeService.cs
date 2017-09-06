@@ -23,6 +23,7 @@ namespace HeadHunterTest.Domain.Services
             .Include(x => x.JobSeeker)
             .Include(x => x.ResumeInCity)
             .Include(x => x.ProfessionalArea)
+            .Include(x => x.ResumeVacancies)
             .ToList();
 
         private readonly DatabaseContext _context;
@@ -138,6 +139,7 @@ namespace HeadHunterTest.Domain.Services
                 .Include(x => x.JobSeeker)
                 .Include(x => x.ResumeInCity)
                 .Include(x => x.ProfessionalArea)
+                .Include(x => x.ResumeVacancies)
                 .ToListAsync();
         }
 

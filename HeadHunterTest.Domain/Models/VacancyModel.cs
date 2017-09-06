@@ -8,11 +8,6 @@ namespace HeadHunterTest.Domain.Models
     public class VacancyModel
     {
         /// <summary>
-        /// Id работодателя
-        /// </summary>
-        public Guid EmployerId { get; set; }
-
-        /// <summary>
         /// Id города, в котором размещается вакансия
         /// </summary>
         public Guid CityId { get; set; }

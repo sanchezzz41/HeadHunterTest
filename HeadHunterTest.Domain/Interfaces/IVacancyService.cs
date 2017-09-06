@@ -19,9 +19,10 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <summary>
         /// Добавляет вакансию
         /// </summary>
+        /// <param name="idEmployer"></param>
         /// <param name="vacancyModel"></param>
         /// <returns></returns>
-        Task<Guid> AddAsync(VacancyModel vacancyModel);
+        Task<Guid> AddAsync(Guid idEmployer,VacancyModel vacancyModel);
 
         /// <summary>
         /// Изменяет вакансию по Id
