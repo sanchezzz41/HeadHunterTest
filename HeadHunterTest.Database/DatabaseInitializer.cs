@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 
 namespace HeadHunterTest.Database
@@ -10,49 +10,35 @@ namespace HeadHunterTest.Database
     /// <summary>
     /// Класс содержащий метод иницилизации для бд
     /// </summary>
-    public static class DatabaseInitialize
+    public static class DatabaseInitializer
     {
         public static async Task Initialize(this DatabaseContext context, IServiceProvider services, IPasswordHasher<User> hasher)
         {
             //Иницилизация ролей
             {
-                var roleAdmin = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOptions.Admin);
-                if (roleAdmin == null)
+                foreach (RolesOptions role in Enum.GetValues(typeof(RolesOptions)))
                 {
-                    roleAdmin = new Role(RolesOptions.Admin, nameof(RolesOptions.Admin));
-                    await context.Roles.AddAsync(roleAdmin);
-                }
-
-                var roleJobSeeker = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOptions.JobSeeker);
-                if (roleJobSeeker == null)
-                {
-                    roleJobSeeker = new Role(RolesOptions.JobSeeker, nameof(RolesOptions.JobSeeker));
-                    await context.Roles.AddAsync(roleJobSeeker);
-                }
-
-                var roleEmp = await context.Roles.SingleOrDefaultAsync(x => x.Id == RolesOptions.Employer);
-                if (roleEmp == null)
-                {
-                    roleEmp = new Role(RolesOptions.Employer, nameof(RolesOptions.Employer));
-                    await context.Roles.AddAsync(roleEmp);
+                    var roleAdmin = await context.Roles.SingleOrDefaultAsync(x => x.Id == role);
+                    if (roleAdmin == null)
+                    {
+                        roleAdmin = new Role(role, Enum.GetName(typeof(RolesOptions), role));
+                        await context.Roles.AddAsync(roleAdmin);
+                    }
                 }
             }
             //Иницилизация городов
             {
-                var moscowCity = await context.Cities.SingleOrDefaultAsync(x =>
-                    string.Compare(x.Name, "Москва", StringComparison.CurrentCultureIgnoreCase) == 0);
-                if (moscowCity == null)
+                var listCity = new List<string> {"Москва", "Санкт-Питербург", "Калуга"};
+                foreach (var city in listCity)
                 {
-                    moscowCity = new City("Москва");
-                    await context.Cities.AddAsync(moscowCity);
-                }
+                    var resultCity= await context.Cities.SingleOrDefaultAsync(x =>
+                        string.Compare(x.Name, city, StringComparison.CurrentCultureIgnoreCase) == 0);
 
-                var spbCity = await context.Cities.SingleOrDefaultAsync(x =>
-                    string.Compare(x.Name, "Санкт-Питербург", StringComparison.CurrentCultureIgnoreCase) == 0);
-                if (spbCity == null)
-                {
-                    spbCity = new City("Санкт-Питербург");
-                    await context.Cities.AddAsync(spbCity);
+                    if (resultCity == null)
+                    {
+                        resultCity = new City(city);
+                        await context.Cities.AddAsync(resultCity);
+                    }
                 }
 
                 //Иницилизация админа
@@ -65,11 +51,12 @@ namespace HeadHunterTest.Database
                     var passwordSalt = "uigu93gtuh";
                     var password = "admin";
                     var resultHash = hashProvider.HashPassword(null, password + passwordSalt);
+                    var cityAdmin = await context.Cities.FirstAsync();
 
                     admin = new User
                     {
                         Id = Guid.NewGuid(),
-                        IdCity = moscowCity.Id,
+                        IdCity = cityAdmin.Id,
                         Email = "admin",
                         Name = "admin",
                         PasswordSalt = passwordSalt,
@@ -82,7 +69,6 @@ namespace HeadHunterTest.Database
                 }
             }
             await context.SaveChangesAsync();
-
         }
     }
 }

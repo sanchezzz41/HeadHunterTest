@@ -149,7 +149,7 @@ namespace HeadHunterTest.Domain.Services
         /// <param name="idResume">Id резюме</param>
         /// <param name="idVacancy">Id вакансии</param>
         /// <returns></returns>
-        public async Task<Guid> AffixResumeToVacancy(Guid idResume, Guid idVacancy)
+        public async Task AffixResumeToVacancy(Guid idResume, Guid idVacancy)
         {
             var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.Id == idResume);
             if (resultResume == null)
@@ -167,8 +167,6 @@ namespace HeadHunterTest.Domain.Services
 
             await _context.ResumeVacancies.AddAsync(resultResVac);
             await _context.SaveChangesAsync();
-
-            return resultResVac.Id;
         }
 
         /// <summary>
