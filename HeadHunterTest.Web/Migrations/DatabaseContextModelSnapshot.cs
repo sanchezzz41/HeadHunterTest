@@ -74,15 +74,11 @@ namespace HeadHunterTest.Web.Migrations
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.ResumeVacancy", b =>
                 {
-                    b.Property<Guid>("Id");
-
                     b.Property<Guid>("ResumeId");
 
                     b.Property<Guid>("VacancyId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResumeId");
+                    b.HasKey("ResumeId", "VacancyId");
 
                     b.HasIndex("VacancyId");
 

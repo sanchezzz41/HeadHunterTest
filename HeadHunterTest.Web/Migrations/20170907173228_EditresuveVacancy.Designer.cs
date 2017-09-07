@@ -13,8 +13,8 @@ using System;
 namespace HeadHunterTest.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170907172035_RenameVacancyInCity")]
-    partial class RenameVacancyInCity
+    [Migration("20170907173228_EditresuveVacancy")]
+    partial class EditresuveVacancy
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,15 +75,11 @@ namespace HeadHunterTest.Web.Migrations
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.ResumeVacancy", b =>
                 {
-                    b.Property<Guid>("Id");
-
                     b.Property<Guid>("ResumeId");
 
                     b.Property<Guid>("VacancyId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResumeId");
+                    b.HasKey("ResumeId", "VacancyId");
 
                     b.HasIndex("VacancyId");
 

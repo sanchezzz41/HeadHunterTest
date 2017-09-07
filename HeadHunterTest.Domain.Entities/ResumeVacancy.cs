@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace HeadHunterTest.Domain.Entities
 {
@@ -11,12 +8,6 @@ namespace HeadHunterTest.Domain.Entities
     /// </summary>
     public class ResumeVacancy
     {
-        /// <summary>
-        /// Id
-        /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public Guid Id { get; set; }
 
         /// <summary>
         /// Id резюме
@@ -36,7 +27,6 @@ namespace HeadHunterTest.Domain.Entities
 
         public ResumeVacancy()
         {
-            Id = Guid.NewGuid();
         }
 
         /// <summary>
@@ -46,7 +36,6 @@ namespace HeadHunterTest.Domain.Entities
         /// <param name="idVacancy">Id вакансии</param>
         public ResumeVacancy(Guid idResume,Guid idVacancy)
         {
-            Id=Guid.NewGuid();
             ResumeId = idResume;
             VacancyId = idVacancy; 
         }
