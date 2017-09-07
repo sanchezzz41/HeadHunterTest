@@ -52,7 +52,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <param name="idResume">Id резюме</param>
         /// <param name="idVacancy">Id вакансии</param>
         /// <returns></returns>
-        Task AffixResumeToVacancy(Guid idResume, Guid idVacancy);
+        Task<Guid> AffixResumeToVacancy(Guid idResume, Guid idVacancy);
 
         /// <summary>
         /// Возвращает список вакансий, которые прикриплены к резюме 

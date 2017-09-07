@@ -74,11 +74,15 @@ namespace HeadHunterTest.Web.Migrations
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.ResumeVacancy", b =>
                 {
+                    b.Property<Guid>("Id");
+
                     b.Property<Guid>("ResumeId");
 
                     b.Property<Guid>("VacancyId");
 
-                    b.HasKey("ResumeId", "VacancyId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResumeId");
 
                     b.HasIndex("VacancyId");
 
@@ -206,12 +210,12 @@ namespace HeadHunterTest.Web.Migrations
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.ResumeVacancy", b =>
                 {
                     b.HasOne("HeadHunterTest.Domain.Entities.Resume", "Resume")
-                        .WithMany("ResumeVacancies")
+                        .WithMany()
                         .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HeadHunterTest.Domain.Entities.Vacancy", "Vacancy")
-                        .WithMany("ResumeVacancies")
+                        .WithMany()
                         .HasForeignKey("VacancyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
