@@ -96,7 +96,7 @@ namespace HeadHunterTest.Domain.Services
             return await _context.Cities
                 .Include(x=>x.Users)
                 .Include(x=>x.Resumes)
-                .Include(x=>x.Vacancieses)
+                .Include(x=>x.Vacancies)
                 .ToListAsync();
         }
     }
