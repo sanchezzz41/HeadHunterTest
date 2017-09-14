@@ -72,6 +72,14 @@ namespace HeadHunterTest.Domain.Entities
             Id = Guid.NewGuid();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idJobSeeker">Id соискателя</param>
+        /// <param name="idCity">Id города</param>
+        /// <param name="idProfArea">Id проф. области</param>
+        /// <param name="salary">Желаемая зарплата</param>
+        /// <param name="desiredPosition">Желаемая должность</param>
         public Resume(Guid idJobSeeker, Guid idCity, Guid idProfArea, uint salary, string desiredPosition)
         {
             Id = Guid.NewGuid();

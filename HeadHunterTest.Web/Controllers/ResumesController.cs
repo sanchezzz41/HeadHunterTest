@@ -56,7 +56,7 @@ namespace HeadHunterTest.Web.Controllers
         }
 
         //Прикрепляет резюме к вакансии
-        [HttpPost("AttachResume")]
+        [HttpPost("AttachmentResume")]
         public async Task AttachToVacancy([FromQuery] Guid idResume, [FromQuery] Guid idVacancy)
         {
             await _resumeService.AffixResumeToVacancy(idResume, idVacancy);
