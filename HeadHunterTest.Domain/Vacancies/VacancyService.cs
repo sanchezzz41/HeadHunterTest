@@ -4,16 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Database;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Notes;
+using HeadHunterTest.Domain.Notes.Models;
+using HeadHunterTest.Domain.Vacancies.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace HeadHunterTest.Domain.Services
+namespace HeadHunterTest.Domain.Vacancies
 {
     /// <summary>
     /// Класс реализующий IVacancyService
     /// </summary>
-    public class VacancyService: IVacancyService
+    public class VacancyService : IVacancyService
     {
         /// <summary>
         /// Список вакансий
@@ -25,18 +26,21 @@ namespace HeadHunterTest.Domain.Services
             .ToList();
 
         private readonly DatabaseContext _context;
+        private readonly INoteService _noteService;
 
-        public VacancyService(DatabaseContext context)
+        public VacancyService(DatabaseContext context, INoteService noteService)
         {
             _context = context;
+            _noteService = noteService;
         }
 
         /// <summary>
         /// Добавляет вакансию
         /// </summary>
+        /// <param name="employerGuid"></param>
         /// <param name="vacancyModel"></param>
         /// <returns></returns>
-        public async Task<Guid> AddAsync(VacancyModel vacancyModel)
+        public async Task<Guid> AddAsync(Guid employerGuid, VacancyInfo vacancyModel)
         {
             if (vacancyModel == null)
             {
@@ -44,17 +48,19 @@ namespace HeadHunterTest.Domain.Services
             }
 
             var resultCity = await _context.Cities.SingleAsync(x => x.CityGuid == vacancyModel.CityGuid);
-          
-            var resultEmpoyer = await _context.Employers.SingleAsync(x => x.UserGuid == vacancyModel.EmployerId);
+
+            var resultEmpoyer = await _context.Employers.SingleAsync(x => x.UserGuid == employerGuid);
 
             var resultEmp = await _context.Employments.SingleAsync(x => x.EmploymentId == vacancyModel.EmploymentId);
 
-            var resultProfArea = await _context.ProfessionalAreas.SingleAsync(x => x.ProfessionalAreaGuid == vacancyModel.ProfAreaGuid);
+            var resultProfArea =
+                await _context.ProfessionalAreas.SingleAsync(x => x.ProfessionalAreaGuid == vacancyModel.ProfAreaGuid);
 
             var resultVacancy = new Vacancy(resultEmpoyer.UserGuid, resultCity.CityGuid,
                 resultProfArea.ProfessionalAreaGuid, resultEmp.EmploymentId, vacancyModel.Salary, vacancyModel.Position,
                 vacancyModel.WorkExpirience, vacancyModel.Description, vacancyModel.Phone);
-             _context.Vacancies.Add(resultVacancy);
+
+            _context.Vacancies.Add(resultVacancy);
             await _context.SaveChangesAsync();
 
             return resultVacancy.VacancyGuid;
@@ -66,7 +72,7 @@ namespace HeadHunterTest.Domain.Services
         /// <param name="idVacancy"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task EditAsync(Guid idVacancy, VacancyModel model)
+        public async Task EditAsync(Guid idVacancy, VacancyInfo model)
         {
             if (model == null)
             {
@@ -79,13 +85,16 @@ namespace HeadHunterTest.Domain.Services
 
             var resultEmp = await _context.Employments.SingleAsync(x => x.EmploymentId == model.EmploymentId);
 
-            var resultProfArea = await _context.ProfessionalAreas.SingleAsync(x => x.ProfessionalAreaGuid == model.ProfAreaGuid);
+            var resultProfArea =
+                await _context.ProfessionalAreas.SingleAsync(x => x.ProfessionalAreaGuid == model.ProfAreaGuid);
 
             resultVacancy.CityGuid = resultCity.CityGuid;
-            resultVacancy.Emp = resultCity.CityGuid;
-            resultVacancy.CityGuid = resultCity.CityGuid;
-            resultVacancy.CityGuid = resultCity.CityGuid;
+            resultVacancy.EmploymentId =resultEmp.EmploymentId;
+            resultVacancy.ProfAreaGuid = resultProfArea.ProfessionalAreaGuid;
             resultVacancy.Description = model.Description;
+            resultVacancy.Salary = model.Salary;
+            resultVacancy.WorkExpirience = model.WorkExpirience;
+            resultVacancy.Phone = model.Phone;
 
             await _context.SaveChangesAsync();
         }
@@ -111,13 +120,14 @@ namespace HeadHunterTest.Domain.Services
         /// Возвращает список вакансий
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Vacancy>> GetAsync()
+        public IQueryable<Vacancy> Get()
         {
-            return await _context.Vacancies
-                .Include(x => x.VacanciesInCity)
-                .Include(x => x.Employer)
-                .Include(x=>x.ResumeVacancies)
-                .ToListAsync(); 
+            return _context.Vacancies;
+        }
+
+        public async Task AttachVacancy(NoteInfo model)
+        {
+            await _noteService.AttachResumeToVacancy(model, true);
         }
 
         /// <summary>

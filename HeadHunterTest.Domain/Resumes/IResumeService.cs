@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Resumes.Models;
 
-namespace HeadHunterTest.Domain.Interfaces
+namespace HeadHunterTest.Domain.Resumes
 {
     /// <summary>
     /// Интерфейс для работы с резюме
@@ -23,7 +23,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <param name="idJobSeeker">Id соискателя, которому будет добавлено резюме</param>
         /// <param name="model">Модель содержащая данные для резюме</param>
         /// <returns></returns>
-        Task<Guid> AddAsync(Guid idJobSeeker, ResumeModel model);
+        Task<Guid> AddAsync(Guid idJobSeeker, ResumeInfo model);
 
         /// <summary>
         /// Изменяет резюме
@@ -31,7 +31,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <param name="idResume">Id резюме, которое надо изменить</param>
         /// <param name="model">Модель для изменения резюме</param>
         /// <returns></returns>
-        Task EditAsync(Guid idResume, ResumeModel model);
+        Task EditAsync(Guid idResume, ResumeInfo model);
 
         /// <summary>
         /// Удаляет резюме по Id
@@ -44,7 +44,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// Возвращает список резюме
         /// </summary>
         /// <returns></returns>
-        Task<List<Resume>> GetAsync();
+       IQueryable<Resume> Get();
 
         /// <summary>
         /// Прикрепляет резюме к вакансии
@@ -52,7 +52,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <param name="idResume">Id резюме</param>
         /// <param name="idVacancy">Id вакансии</param>
         /// <returns></returns>
-        Task AffixResumeToVacancy(Guid idResume, Guid idVacancy);
+        Task AttachResume(Guid idResume, Guid idVacancy);
 
         /// <summary>
         /// Возвращает список вакансий, которые прикриплены к резюме 

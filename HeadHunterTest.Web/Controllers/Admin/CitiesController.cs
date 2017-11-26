@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using HeadHunterTest.Domain.Cities;
+using HeadHunterTest.Domain.Cities.Models;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
 using HeadHunterTest.Web.Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +28,7 @@ namespace HeadHunterTest.Web.Controllers.Admin
 
         //Добавление города
         [HttpPost]
-        public async Task<object> Add([FromBody] CityModel model)
+        public async Task<object> Add([FromBody] CityInfo model)
         {
             return await _cityService.AddAsync(model);
         }
@@ -42,7 +42,7 @@ namespace HeadHunterTest.Web.Controllers.Admin
 
         //Изменение города
         [HttpPut]
-        public async Task Edit([FromBody] CityModel model, [FromQuery] Guid idCity)
+        public async Task Edit([FromBody] CityInfo model, [FromQuery] Guid idCity)
         {
             await _cityService.EditAsync(idCity, model);
         }

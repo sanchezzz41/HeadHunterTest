@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HeadHunterTest.Domain.Models
+namespace HeadHunterTest.Domain.Users.Models
 {
     public class EmployerRegisterModel : UserRegisterModel
     {
@@ -15,5 +15,8 @@ namespace HeadHunterTest.Domain.Models
         /// </summary>
         [Required]
         public string WebSite { get; set; }
+
+        [Required]
+        public string Address { get; set; }
     }
 }

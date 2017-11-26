@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using HeadHunterTest.Domain.Entities;
 
-namespace HeadHunterTest.Domain.Models
+namespace HeadHunterTest.Domain.Users.Models
 {
     /// <summary>
     /// Модель для регистрации пользователя
@@ -41,13 +41,8 @@ namespace HeadHunterTest.Domain.Models
         public string PhoneNumber { get; set; }
 
         /// <summary>
-        /// Роль, к которой принадлежит пользователь
-        /// </summary>
-        public RolesOptions RoleId { get; set; }
-
-        /// <summary>
         /// Название города
         /// </summary>
-        public string NameCity { get; set; }
+        public Guid CityGuid { get; set; }
     }
 }

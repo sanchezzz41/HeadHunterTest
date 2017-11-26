@@ -1,9 +1,9 @@
-﻿namespace HeadHunterTest.Domain.Models
+﻿namespace HeadHunterTest.Domain.Cities.Models
 {
     /// <summary>
     /// Модель представляющая город
     /// </summary>
-    public class CityModel
+    public class CityInfo
     {
         /// <summary>
         /// Название города

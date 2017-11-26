@@ -2,12 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Utilits;
+using HeadHunterTest.Domain.Users;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Caching.Memory;
 
-namespace HeadHunterTest.Domain.Services
+namespace HeadHunterTest.Domain.Authorizations
 {
     /// <summary>
     /// Класс для авторизации пользователя

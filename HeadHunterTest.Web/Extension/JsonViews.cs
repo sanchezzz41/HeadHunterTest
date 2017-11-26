@@ -1,5 +1,10 @@
-﻿using HeadHunterTest.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HeadHunterTest.Domain.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace HeadHunterTest.Web.Extension
 {
@@ -134,5 +139,26 @@ namespace HeadHunterTest.Web.Extension
             }
             return null;
         }
+
+        /// <summary>
+        /// Возвращает коллекцию элементов
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="selector"></param>
+        /// <returns></returns>
+        public static async Task<IEnumerable<TResult>> GetCollection<T, TResult>(this IQueryable<T> query, Func<T, TResult> selector)
+        {
+            var list = await query.ToListAsync();
+            return list.Select(selector);
+        }
+
+        public static async Task<IEnumerable<TResult>> GetCollection<T, TResult>(this IEnumerable<T> query, Func<T, TResult> selector)
+        {
+            var list = await Task.FromResult(query.ToList());
+            return list.Select(selector);
+        }
+
     }
 }

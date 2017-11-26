@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using HeadHunterTest.Domain.Authorizations.Models;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Users;
+using HeadHunterTest.Domain.Users.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using IAuthorizationService = HeadHunterTest.Domain.Interfaces.IAuthorizationService;
+using IAuthorizationService = HeadHunterTest.Domain.Authorizations.IAuthorizationService;
 
 namespace HeadHunterTest.Web.Controllers
 {
@@ -67,6 +68,5 @@ namespace HeadHunterTest.Web.Controllers
             await _signInManager.SignOutAsync();
             return "Вы вышли с аккаунта.";
         }
-
     }
 }

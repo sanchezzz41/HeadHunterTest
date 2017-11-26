@@ -1,19 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using HeadHunterTest.Domain.Entities;
 
-namespace HeadHunterTest.Domain.Models
+namespace HeadHunterTest.Domain.Vacancies.Models
 {
     /// <summary>
     /// Модель для вакансии
     /// </summary>
-    public class VacancyModel
+    public class VacancyInfo
     {
-        /// <summary>
-        /// Id работодателя
-        /// </summary>
-        public Guid EmployerId { get; set; }
 
         /// <summary>
         /// Id города, в котором размещено резюме

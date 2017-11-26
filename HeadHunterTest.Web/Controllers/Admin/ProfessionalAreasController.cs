@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.ProfAreas;
+using HeadHunterTest.Domain.ProfAreas.Models;
 using HeadHunterTest.Web.Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +29,7 @@ namespace HeadHunterTest.Web.Controllers.Admin
 
         //Добавление професии
         [HttpPost]
-        public async Task<object> Add([FromBody] ProfessionalAreaModel profModel)
+        public async Task<object> Add([FromBody] ProfessionalAreaInfo profModel)
         {
             return await _professionalAreaService.AddAsync(profModel);
         }
@@ -43,7 +43,7 @@ namespace HeadHunterTest.Web.Controllers.Admin
 
         //Изменение професии
         [HttpPut]
-        public async Task Edit([FromBody] ProfessionalAreaModel profModel, [FromQuery]Guid idProf)
+        public async Task Edit([FromBody] ProfessionalAreaInfo profModel, [FromQuery]Guid idProf)
         {
             await _professionalAreaService.EditAsync(idProf, profModel);
         }

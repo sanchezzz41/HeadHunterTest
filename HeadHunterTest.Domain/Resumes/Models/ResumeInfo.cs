@@ -2,18 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using HeadHunterTest.Domain.Entities;
 
-namespace HeadHunterTest.Domain.Models
+namespace HeadHunterTest.Domain.Resumes.Models
 {
     /// <summary>
     /// Модель для резюме
     /// </summary>
-    public class ResumeModel
+    public class ResumeInfo
     {
-        /// <summary>
-        /// Id соискателя
-        /// </summary>
-        public Guid JobSeekerGuid { get; set; }
-
         /// <summary>
         /// Id города, в котором размещено резюме
         /// </summary>

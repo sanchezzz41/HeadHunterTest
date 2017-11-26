@@ -4,13 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Database;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Users.Models;
 using HeadHunterTest.Domain.Utilits;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace HeadHunterTest.Domain.Services
+namespace HeadHunterTest.Domain.Users
 {
     /// <inheritdoc />
     /// <summary>
@@ -59,11 +58,9 @@ namespace HeadHunterTest.Domain.Services
         {
             var user = await GetUser(jobSeekerModel);
 
-            //TODO ДЕЛАТЬ
-            //var resultJobSeeker = new JobSeeker(user.Name, user.Email, user.Phone,
-            //    user.PasswordSalt, user.PasswordHash, user.IdCity,
-            //    jobSeekerModel.DateOfBirth, jobSeekerModel.Citizenship);
-            var resultJobSeeker = new JobSeeker();
+            var resultJobSeeker = new JobSeeker(user.Name, user.Email, user.Phone,
+                user.PasswordSalt, user.PasswordHash, user.IdCity,
+                jobSeekerModel.DateOfBirth, jobSeekerModel.Citizenship, jobSeekerModel.Sex);
             await _context.JobSeekers.AddAsync(resultJobSeeker);
             await _context.SaveChangesAsync();
 
@@ -81,7 +78,7 @@ namespace HeadHunterTest.Domain.Services
 
             var resultEmployer = new Employer(user.Name, user.Email, user.Phone,
                 user.PasswordSalt, user.PasswordHash, user.IdCity,
-                employerModel.NameCompany, employerModel.WebSite, null);
+                employerModel.NameCompany, employerModel.WebSite, employerModel.Address);
 
             await _context.Employers.AddAsync(resultEmployer);
             await _context.SaveChangesAsync();
@@ -132,12 +129,8 @@ namespace HeadHunterTest.Domain.Services
                 throw new ArgumentException($"Пользователь с {model.Email} уже существует.");
             }
 
-            var resultCity = await _context.Cities.SingleOrDefaultAsync(x =>
-                String.Compare(x.Name, model.NameCity, StringComparison.OrdinalIgnoreCase) == 0);
-            if (resultCity == null)
-            {
-                throw new NullReferenceException($"Город с названием {model.NameCity} не найден.");
-            }
+            var resultCity = await _context.Cities.SingleAsync(x =>x.CityGuid==model.CityGuid);
+           
 
             var passwordSalt = Randomizer.GetString(10);
             //Сначала пароль потом соль
@@ -145,7 +138,7 @@ namespace HeadHunterTest.Domain.Services
 
             var resultUser = new User(model.Name, model.Email, model.PhoneNumber, passwordSalt,
                 passwordHash,
-                model.RoleId, resultCity.CityGuid);
+                RolesOptions.Admin, resultCity.CityGuid);
 
             return resultUser;
         }

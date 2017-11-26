@@ -1,7 +1,11 @@
-﻿using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Services;
+﻿using HeadHunterTest.Domain.Authorizations;
+using HeadHunterTest.Domain.Cities;
+using HeadHunterTest.Domain.Notes;
+using HeadHunterTest.Domain.ProfAreas;
+using HeadHunterTest.Domain.Resumes;
+using HeadHunterTest.Domain.Users;
+using HeadHunterTest.Domain.Vacancies;
 using Microsoft.Extensions.DependencyInjection;
-
 
 namespace HeadHunterTest.Domain
 {
@@ -23,6 +27,7 @@ namespace HeadHunterTest.Domain
             service.AddScoped<IProfessionalAreaService, ProfessionalAreaService>();
             service.AddScoped<IResumeService, ResumeService>();
             service.AddScoped<IVacancyService, VacancyService>();
+            service.AddScoped<INoteService, NoteService>();
             return service;
         }
     }

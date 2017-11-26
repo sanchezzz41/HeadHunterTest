@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Database;
+using HeadHunterTest.Domain.Cities.Models;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace HeadHunterTest.Domain.Services
+namespace HeadHunterTest.Domain.Cities
 {
     /// <summary>
     /// Класс реализиющий ICityService 
@@ -28,7 +27,7 @@ namespace HeadHunterTest.Domain.Services
         /// </summary>
         /// <param name="cityModel">Модель для добавления</param>
         /// <returns></returns>
-        public async Task<Guid> AddAsync(CityModel cityModel)
+        public async Task<Guid> AddAsync(CityInfo cityModel)
         {
             if (cityModel.Name == null || cityModel.Name.Length < 2)
             {
@@ -53,7 +52,7 @@ namespace HeadHunterTest.Domain.Services
         /// <param name="id">Id города</param>
         /// <param name="newModel">Новая модель</param>
         /// <returns></returns>
-        public async Task EditAsync(Guid id, CityModel newModel)
+        public async Task EditAsync(Guid id, CityInfo newModel)
         {
             if (newModel == null)
             {

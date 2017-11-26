@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
 
-namespace HeadHunterTest.Domain.Interfaces
+namespace HeadHunterTest.Domain.Authorizations
 {
     /// <summary>
     /// Интерфейс для авторизации

@@ -1,5 +1,5 @@
 ﻿
-namespace HeadHunterTest.Domain.Models
+namespace HeadHunterTest.Domain.Authorizations.Models
 {
     /// <summary>
     /// Модель для входа

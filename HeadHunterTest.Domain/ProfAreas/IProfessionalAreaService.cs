@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.ProfAreas.Models;
 
-namespace HeadHunterTest.Domain.Interfaces
+namespace HeadHunterTest.Domain.ProfAreas
 {
     /// <summary>
     /// Интерфейс для работы с проффесиями
@@ -21,7 +21,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// </summary>
         /// <param name="profModel">Модель которая из которой будут браться данные</param>
         /// <returns></returns>
-        Task<Guid> AddAsync(ProfessionalAreaModel profModel);
+        Task<Guid> AddAsync(ProfessionalAreaInfo profModel);
 
         /// <summary>
         /// Изменяет название професии
@@ -29,7 +29,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <param name="id">Id професии</param>
         /// <param name="newModel">Новая модель, из которой будут браться данные</param>
         /// <returns></returns>
-        Task EditAsync(Guid id, ProfessionalAreaModel newModel);
+        Task EditAsync(Guid id, ProfessionalAreaInfo newModel);
 
         /// <summary>
         /// Удаляет професию по id

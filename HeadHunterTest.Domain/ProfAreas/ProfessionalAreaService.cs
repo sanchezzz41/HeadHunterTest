@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Database;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.ProfAreas.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace HeadHunterTest.Domain.Services
+namespace HeadHunterTest.Domain.ProfAreas
 {
     /// <summary>
     /// Класс реализующий интерфейс IProfessionalAreaService
@@ -32,7 +31,7 @@ namespace HeadHunterTest.Domain.Services
         /// </summary>
         /// <param name="profModel">Модель которая из которой будут браться данные</param>
         /// <returns></returns>
-        public async Task<Guid> AddAsync(ProfessionalAreaModel profModel)
+        public async Task<Guid> AddAsync(ProfessionalAreaInfo profModel)
         {
             if (profModel == null)
             {
@@ -53,7 +52,7 @@ namespace HeadHunterTest.Domain.Services
         /// <param name="id">Id професии</param>
         /// <param name="newModel">Новая модель, из которой будут браться данные</param>
         /// <returns></returns>
-        public async Task EditAsync(Guid id, ProfessionalAreaModel newModel)
+        public async Task EditAsync(Guid id, ProfessionalAreaInfo newModel)
         {
             if (newModel == null)
             {

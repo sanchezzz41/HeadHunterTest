@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Users.Models;
 
-namespace HeadHunterTest.Domain.Interfaces
+namespace HeadHunterTest.Domain.Users
 {
     /// <summary>
     /// Интерфейс для работы с пользователями

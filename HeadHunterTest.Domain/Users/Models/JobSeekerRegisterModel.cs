@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HeadHunterTest.Domain.Models
+namespace HeadHunterTest.Domain.Users.Models
 {
     /// <summary>
     /// Модель для регистрации соискателя
@@ -11,7 +11,6 @@ namespace HeadHunterTest.Domain.Models
         /// <summary>
         /// Дата рождения
         /// </summary>
-        [Required]
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>
@@ -19,5 +18,10 @@ namespace HeadHunterTest.Domain.Models
         /// </summary>
         [Required]
         public string Citizenship { get; set; }
+
+        /// <summary>
+        /// True=мальчик
+        /// </summary>
+        public bool Sex { get; set; }
     }
 }

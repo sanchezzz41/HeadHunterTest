@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HeadHunterTest.Domain.Cities.Models;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Models;
 
-namespace HeadHunterTest.Domain.Interfaces
+namespace HeadHunterTest.Domain.Cities
 {
     /// <summary>
     /// Интерфейс для работы с городами
@@ -18,7 +18,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// </summary>
         /// <param name="cityModel">Модель для добавления</param>
         /// <returns></returns>
-        Task<Guid> AddAsync(CityModel cityModel);
+        Task<Guid> AddAsync(CityInfo cityModel);
 
         /// <summary>
         /// Изменяет название города
@@ -26,7 +26,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <param name="id">Id города</param>
         /// <param name="newModel">Новая модель</param>
         /// <returns></returns>
-        Task EditAsync(Guid id, CityModel newModel);
+        Task EditAsync(Guid id, CityInfo newModel);
 
         /// <summary>
         /// Удаляет город по id

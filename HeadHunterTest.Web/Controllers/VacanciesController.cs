@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Vacancies;
+using HeadHunterTest.Domain.Vacancies.Models;
 using HeadHunterTest.Web.Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,14 +29,14 @@ namespace HeadHunterTest.Web.Controllers
 
         //Добавляет вакансию пользователю
         [HttpPost]
-        public async Task<object> Add([FromBody] VacancyModel vacModel,[FromQuery] Guid idEmployer)
+        public async Task<object> Add([FromBody] VacancyInfo vacModel,[FromQuery] Guid idEmployer)
         {
             return await _vacancyService.AddAsync(idEmployer,vacModel);
         }
 
         //Изменяет вакансию
         [HttpPut]
-        public async Task Edit([FromBody] VacancyModel vacModel,[FromQuery] Guid idVacancy)
+        public async Task Edit([FromBody] VacancyInfo vacModel,[FromQuery] Guid idVacancy)
         {
             await _vacancyService.EditAsync(idVacancy, vacModel);
         }
@@ -46,14 +46,6 @@ namespace HeadHunterTest.Web.Controllers
         public async Task Delete([FromQuery] Guid idVacancy)
         {
             await _vacancyService.DeleteAsync(idVacancy);
-        }
-
-        //Возвращает все вакансии
-        [HttpGet]
-        public async Task<object> Get()
-        {
-            var list = await _vacancyService.GetAsync();
-            return list.Select(x => x?.VacancyView());
         }
 
         //Возвращает резюме для данной вакансии

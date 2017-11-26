@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Resumes;
+using HeadHunterTest.Domain.Resumes.Models;
 using HeadHunterTest.Web.Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,14 +30,14 @@ namespace HeadHunterTest.Web.Controllers
 
         //Добавляет резюме
         [HttpPost]
-        public async Task<object> Add([FromBody] ResumeModel resumeModel, [FromQuery] Guid idJobSeeker)
+        public async Task<object> Add([FromBody] ResumeInfo resumeModel, [FromQuery] Guid idJobSeeker)
         {
             return await _resumeService.AddAsync(idJobSeeker, resumeModel);
         }
 
         //Изменяет резюме
         [HttpPut]
-        public async Task Edit([FromBody] ResumeModel resumeModel, [FromQuery] Guid idResume)
+        public async Task Edit([FromBody] ResumeInfo resumeModel, [FromQuery] Guid idResume)
         {
             await _resumeService.EditAsync(idResume, resumeModel);
         }
@@ -47,19 +49,11 @@ namespace HeadHunterTest.Web.Controllers
             await _resumeService.DeleteAsync(idResume);
         }
 
-        //Возвращает список резюме
-        [HttpGet]
-        public async Task<object> Get()
-        {
-            var resumeList = await _resumeService.GetAsync();
-            return resumeList.Select(x => x?.ResumeView());
-        }
-
         //Прикрепляет резюме к вакансии
         [HttpPost("AttachmentResume")]
         public async Task AttachToVacancy([FromQuery] Guid idResume, [FromQuery] Guid idVacancy)
         {
-            await _resumeService.AffixResumeToVacancy(idResume, idVacancy);
+            await _resumeService.AttachResume(idResume, idVacancy);
         }
 
         //Возвращает список вакансий, которые привязаны к одному резюме

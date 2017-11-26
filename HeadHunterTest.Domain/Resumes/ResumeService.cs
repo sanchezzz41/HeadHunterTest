@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Database;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Interfaces;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Notes;
+using HeadHunterTest.Domain.Notes.Models;
+using HeadHunterTest.Domain.Resumes.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace HeadHunterTest.Domain.Services
+namespace HeadHunterTest.Domain.Resumes
 {
     /// <summary>
     /// Класс реализующий IResumeService
@@ -27,10 +27,12 @@ namespace HeadHunterTest.Domain.Services
             .ToList();
 
         private readonly DatabaseContext _context;
+        private readonly INoteService _noteService;
 
-        public ResumeService(DatabaseContext context)
+        public ResumeService(DatabaseContext context, INoteService noteService)
         {
             _context = context;
+            _noteService = noteService;
         }
 
         /// <summary>
@@ -39,14 +41,14 @@ namespace HeadHunterTest.Domain.Services
         /// <param name="idJobSeeker">Id соискателя, которому будет добавлено резюме</param>
         /// <param name="model">Модель содержащая данные для резюме</param>
         /// <returns></returns>
-        public async Task<Guid> AddAsync( ResumeModel model)
+        public async Task<Guid> AddAsync(Guid idJobSeeker, ResumeInfo model)
         {
             if (model == null)
             {
                 throw new NullReferenceException($"Ссылка на модель указывает на null.");
             }
 
-            var resultJobSeeker = await _context.JobSeekers.SingleAsync(x => x.UserGuid == model.JobSeekerGuid);
+            var resultJobSeeker = await _context.JobSeekers.SingleAsync(x => x.UserGuid == idJobSeeker);
 
             var resultCity = await _context.Cities.SingleAsync(x => x.CityGuid == model.CityGuid);
             
@@ -55,6 +57,7 @@ namespace HeadHunterTest.Domain.Services
        
             var resultResume = new Resume(resultJobSeeker.UserGuid, resultCity.CityGuid, resultProf.ProfessionalAreaGuid, model.EmploymentId,
                 model.Salary, model.Position, model.WorkExpirience, model.Description);
+
             await _context.Resumes.AddAsync(resultResume);
             await _context.SaveChangesAsync();
 
@@ -67,7 +70,7 @@ namespace HeadHunterTest.Domain.Services
         /// <param name="idResume">Id резюме, которое надо изменить</param>
         /// <param name="model">Модель для изменения резюме</param>
         /// <returns></returns>
-        public async Task EditAsync(Guid idResume, ResumeModel model)
+        public async Task EditAsync(Guid idResume, ResumeInfo model)
         {
             if (model == null)
             {
@@ -112,14 +115,9 @@ namespace HeadHunterTest.Domain.Services
         /// Возвращает список резюме
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Resume>> GetAsync()
+        public IQueryable<Resume> Get()
         {
-            return await _context.Resumes
-                .Include(x => x.JobSeeker)
-                .Include(x => x.ResumeInCity)
-                .Include(x => x.ProfessionalArea)
-                .Include(x => x.ResumeVacancies)
-                .ToListAsync();
+            return _context.Resumes;
         }
 
         /// <summary>
@@ -128,25 +126,14 @@ namespace HeadHunterTest.Domain.Services
         /// <param name="idResume">Id резюме</param>
         /// <param name="idVacancy">Id вакансии</param>
         /// <returns></returns>
-        public async Task AffixResumeToVacancy(Guid idResume, Guid idVacancy)
+        public async Task AttachResume(Guid idResume, Guid idVacancy)
         {
-            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.ResumeGuid == idResume);
-            if (resultResume == null)
+            var noteInfo = new NoteInfo
             {
-                throw new NullReferenceException($"Резюме с id: {idResume} не существует.");
-            }
-
-            var resultVacancy = await _context.Vacancies.SingleOrDefaultAsync(x => x.VacancyGuid == idVacancy);
-            if (resultVacancy == null)
-            {
-                throw new NullReferenceException($"Вакансии с id: {idVacancy} не существует.");
-            }
-
-            var resultResVac = new Note(resultResume.ResumeGuid, resultVacancy.VacancyGuid,true);
-
-            await _context.Notes.AddAsync(resultResVac);
-            await _context.SaveChangesAsync();
-
+                ResumeGuid = idResume,
+                VacancyGuid = idVacancy
+            };
+            await _noteService.AttachResumeToVacancy(noteInfo, false);
         }
 
         /// <summary>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HeadHunterTest.Domain.Entities;
-using HeadHunterTest.Domain.Models;
+using HeadHunterTest.Domain.Notes.Models;
+using HeadHunterTest.Domain.Vacancies.Models;
 
-namespace HeadHunterTest.Domain.Interfaces
+namespace HeadHunterTest.Domain.Vacancies
 {
     /// <summary>
     /// Интерфейс для работы с вакансией
@@ -19,9 +21,10 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <summary>
         /// Добавляет вакансию
         /// </summary>
+        /// <param name="employerGuid"></param>
         /// <param name="vacancyModel"></param>
         /// <returns></returns>
-        Task<Guid> AddAsync(VacancyModel vacancyModel);
+        Task<Guid> AddAsync(Guid employerGuid,VacancyInfo vacancyModel);
 
         /// <summary>
         /// Изменяет вакансию по Id
@@ -29,7 +32,7 @@ namespace HeadHunterTest.Domain.Interfaces
         /// <param name="idVacancy"></param>
         /// <param name="newModel"></param>
         /// <returns></returns>
-        Task EditAsync(Guid idVacancy, VacancyModel newModel);
+        Task EditAsync(Guid idVacancy, VacancyInfo newModel);
 
         /// <summary>
         /// Удаляет вакансию по Id
@@ -42,7 +45,9 @@ namespace HeadHunterTest.Domain.Interfaces
         /// Возвращает список вакансий
         /// </summary>
         /// <returns></returns>
-        Task<List<Vacancy>> GetAsync();
+        IQueryable<Vacancy> Get();
+
+        Task AttachVacancy(NoteInfo model);
 
         /// <summary>
         /// Возвращает список резюме, которые закреплены за вакансией

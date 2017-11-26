@@ -1,10 +1,10 @@
 ﻿
-namespace HeadHunterTest.Domain.Models
+namespace HeadHunterTest.Domain.ProfAreas.Models
 {
     /// <summary>
     /// Модель представляющая професию
     /// </summary>
-    public class ProfessionalAreaModel
+    public class ProfessionalAreaInfo
     {
         /// <summary>
         /// Название професии
