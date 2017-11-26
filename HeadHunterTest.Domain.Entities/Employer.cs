@@ -1,27 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HeadHunterTest.Domain.Entities
 {
     /// <summary>
     /// Работодатель
     /// </summary>
-    //[Table("Employers")]
     public class Employer : User
     {
         /// <summary>
         /// Название компании
         /// </summary>
         [Required]
-        public string NameCompany { get; set; }
+        [MaxLength(100)]
+        public string NameOfCompany { get; set; }
 
         /// <summary>
         /// Сайт компании
         /// </summary>
         [Required]
-        public string WebSite { get; set; }
+        [MaxLength(100)]
+        public string Site { get; set; }
+
+        /// <summary>
+        /// Адрес
+        /// </summary>
+        [Required]
+        [MaxLength(100)]
+        public string Address { get; set; }
 
         /// <summary>
         /// Список вакансий
@@ -38,7 +45,6 @@ namespace HeadHunterTest.Domain.Entities
         /// Иницилизация соискателя
         /// </summary>
         /// <param name="name">Имя</param>
-        /// <param name="surName">Фамилия</param>
         /// <param name="email">Email</param>
         /// <param name="phoneNumber">Номер телефона</param>
         /// <param name="passwordSalt">Солья для пароля</param>
@@ -46,13 +52,15 @@ namespace HeadHunterTest.Domain.Entities
         /// <param name="idCity">Id города</param>
         /// <param name="nameCompany">Название компании</param>
         /// <param name="webSite">Веб сайт</param>
-        public Employer(string name, string surName, string email, string phoneNumber, string passwordSalt,
-            string passwordHash, Guid idCity, string nameCompany, string webSite)
-            : base(name, surName, email, phoneNumber,
+        /// <param name="address"></param>
+        public Employer(string name, string email, string phoneNumber, string passwordSalt,
+            string passwordHash, Guid idCity, string nameCompany, string webSite,string address)
+            : base(name, email, phoneNumber,
                 passwordSalt, passwordHash, RolesOptions.Employer, idCity)
         {
-            NameCompany = nameCompany;
-            WebSite = webSite;
+            NameOfCompany = nameCompany;
+            Site = webSite;
+            Address = address;
         }
     }
 }

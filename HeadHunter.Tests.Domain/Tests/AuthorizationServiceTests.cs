@@ -82,7 +82,7 @@ namespace HeadHunter.Tests.Domain.Tests
                     var user = new User(a.Name,a.SurName, a.Email, a.PhoneNumber, Randomizer.GetString(5), a.Password,
                         a.RoleId,city.Id);
                     _users.Add(user);
-                    return await Task.FromResult(user.Id);
+                    return await Task.FromResult(user.UserGuid);
                 });
             //Возвращение всех пользователей
             result.Setup(x => x.Users)

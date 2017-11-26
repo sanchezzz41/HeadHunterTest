@@ -15,7 +15,7 @@ namespace HeadHunterTest.Domain.Entities
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public Guid Id { get; set; }
+        public Guid ProfessionalAreaGuid { get; set; }
 
         /// <summary>
         /// Название проф. области
@@ -30,7 +30,7 @@ namespace HeadHunterTest.Domain.Entities
 
         public ProfessionalArea()
         {
-            Id = Guid.NewGuid();
+            ProfessionalAreaGuid = Guid.NewGuid();
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace HeadHunterTest.Domain.Entities
         /// <param name="name">Название професии</param>
         public ProfessionalArea(string name)
         {
-            Id = Guid.NewGuid();
+            ProfessionalAreaGuid = Guid.NewGuid();
             Name = name;
         }
     }

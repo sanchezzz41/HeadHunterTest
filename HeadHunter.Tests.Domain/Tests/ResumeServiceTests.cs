@@ -83,14 +83,14 @@ namespace HeadHunter.Tests.Domain.Tests
             };
 
             //act
-            var id = await _service.AddAsync(jobSeeker.Id, expectedResume);
-            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.Id == id);
+            var id = await _service.AddAsync(jobSeeker.UserGuid, expectedResume);
+            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.ResumeGuid == id);
           
             //assert
             Assert.AreEqual(expectedResume.Salary, resultResume.Salary);
-            Assert.AreEqual(expectedResume.DesiredPosition, resultResume.DesiredPosition);
-            Assert.AreEqual(expectedResume.CityId, resultResume.CityId);
-            Assert.AreEqual(expectedResume.ProfAreaId, resultResume.ProfAreaId);
+            Assert.AreEqual(expectedResume.DesiredPosition, resultResume.Position);
+            Assert.AreEqual(expectedResume.CityId, resultResume.CityGuid);
+            Assert.AreEqual(expectedResume.ProfAreaId, resultResume.ProfAreaGuid);
         }
 
 
@@ -106,8 +106,8 @@ namespace HeadHunter.Tests.Domain.Tests
             var vacancy = await _context.Vacancies.FirstAsync();
 
             //act
-            await _service.AffixResumeToVacancy(resume.Id, vacancy.Id);
-            var resultVacancyResume = resume.ResumeVacancies.SingleOrDefault(x => x.ResumeId == resume.Id);
+            await _service.AffixResumeToVacancy(resume.ResumeGuid, vacancy.VacancyGuid);
+            var resultVacancyResume = resume.ResumeVacancies.SingleOrDefault(x => x.ResumeId == resume.ResumeGuid);
             
             //assert
             Assert.IsNotNull(resultVacancyResume);
@@ -124,8 +124,8 @@ namespace HeadHunter.Tests.Domain.Tests
             var resume = await _context.Resumes.FirstAsync();
 
             //act
-            await _service.DeleteAsync(resume.Id);
-            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.Id == resume.Id);
+            await _service.DeleteAsync(resume.ResumeGuid);
+            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.ResumeGuid == resume.ResumeGuid);
            
             //assert
             Assert.IsNull(resultResume);

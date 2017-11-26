@@ -77,8 +77,8 @@ namespace HeadHunter.Tests.Domain.Tests
              Description = "какое то описание"
             };
             //act
-            var id = await _service.AddAsync(emp.Id, actualVac);
-            var resultVacancy = await _context.Vacancies.SingleOrDefaultAsync(x => x.Id == id);
+            var id = await _service.AddAsync(emp.UserGuid, actualVac);
+            var resultVacancy = await _context.Vacancies.SingleOrDefaultAsync(x => x.VacancyGuid == id);
 
             //assert
             Assert.AreEqual(actualVac.Description, resultVacancy.Description);
@@ -94,8 +94,8 @@ namespace HeadHunter.Tests.Domain.Tests
             //Arrange
             var vac = await _context.Vacancies.FirstAsync();
             //act
-            await _service.DeleteAsync(vac.Id);
-            var actualVac = await _context.Vacancies.SingleOrDefaultAsync(x => x.Id == vac.Id);
+            await _service.DeleteAsync(vac.VacancyGuid);
+            var actualVac = await _context.Vacancies.SingleOrDefaultAsync(x => x.VacancyGuid == vac.VacancyGuid);
 
             //assert
             Assert.IsNull(actualVac);

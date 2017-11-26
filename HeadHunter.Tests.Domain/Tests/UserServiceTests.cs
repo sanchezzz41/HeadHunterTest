@@ -91,12 +91,12 @@ namespace HeadHunter.Tests.Domain.Tests
 
             //act
             var id = await _service.AddAsync(admin);
-            var resultAdmin = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            var resultAdmin = await _context.Users.SingleOrDefaultAsync(x => x.UserGuid == id);
             //assert
             Assert.AreEqual(admin.Name, resultAdmin.Name);
             Assert.AreEqual(admin.Email, resultAdmin.Email);
             Assert.AreEqual(admin.Password + resultAdmin.PasswordSalt, resultAdmin.PasswordHash);
-            Assert.AreEqual(admin.PhoneNumber, resultAdmin.PhoneNumber);
+            Assert.AreEqual(admin.PhoneNumber, resultAdmin.Phone);
             Assert.AreEqual(admin.SurName, resultAdmin.SurName);
             Assert.AreEqual(admin.RoleId, resultAdmin.RoleId);
         }
@@ -124,12 +124,12 @@ namespace HeadHunter.Tests.Domain.Tests
 
             //act
             var id = await _service.AddAsync(jobSeeker);
-            var resultJobSeeker = await _context.JobSeekers.SingleOrDefaultAsync(x => x.Id == id);
+            var resultJobSeeker = await _context.JobSeekers.SingleOrDefaultAsync(x => x.UserGuid == id);
             //assert
             Assert.AreEqual(jobSeeker.Name, resultJobSeeker.Name);
             Assert.AreEqual(jobSeeker.Email, resultJobSeeker.Email);
             Assert.AreEqual(jobSeeker.Password + resultJobSeeker.PasswordSalt, resultJobSeeker.PasswordHash);
-            Assert.AreEqual(jobSeeker.PhoneNumber, resultJobSeeker.PhoneNumber);
+            Assert.AreEqual(jobSeeker.PhoneNumber, resultJobSeeker.Phone);
             Assert.AreEqual(jobSeeker.SurName, resultJobSeeker.SurName);
             Assert.AreEqual(jobSeeker.Citizenship, resultJobSeeker.Citizenship);
             Assert.AreEqual(jobSeeker.DateOfBirth, resultJobSeeker.DateOfBirth);
@@ -158,15 +158,15 @@ namespace HeadHunter.Tests.Domain.Tests
 
             //act
             var id = await _service.AddAsync(employer);
-            var resultJobSeeker = await _context.Employers.SingleOrDefaultAsync(x => x.Id == id);
+            var resultJobSeeker = await _context.Employers.SingleOrDefaultAsync(x => x.UserGuid == id);
             //assert
             Assert.AreEqual(employer.Name, resultJobSeeker.Name);
             Assert.AreEqual(employer.Email, resultJobSeeker.Email);
             Assert.AreEqual(employer.Password + resultJobSeeker.PasswordSalt, resultJobSeeker.PasswordHash);
-            Assert.AreEqual(employer.PhoneNumber, resultJobSeeker.PhoneNumber);
+            Assert.AreEqual(employer.PhoneNumber, resultJobSeeker.Phone);
             Assert.AreEqual(employer.SurName, resultJobSeeker.SurName);
-            Assert.AreEqual(employer.NameCompany, resultJobSeeker.NameCompany);
-            Assert.AreEqual(employer.WebSite, resultJobSeeker.WebSite);
+            Assert.AreEqual(employer.NameCompany, resultJobSeeker.NameOfCompany);
+            Assert.AreEqual(employer.WebSite, resultJobSeeker.Site);
         }
 
         /// <summary>
@@ -179,8 +179,8 @@ namespace HeadHunter.Tests.Domain.Tests
             //Arrange
             var resultUser = await _context.Users.FirstAsync();
             //act
-            await _service.DeleteAsync(resultUser.Id);
-            var actualUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == resultUser.Id);
+            await _service.DeleteAsync(resultUser.UserGuid);
+            var actualUser = await _context.Users.SingleOrDefaultAsync(x => x.UserGuid == resultUser.UserGuid);
             //assert
             Assert.IsNull(actualUser);
         }

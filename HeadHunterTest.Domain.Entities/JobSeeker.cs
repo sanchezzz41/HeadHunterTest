@@ -14,13 +14,19 @@ namespace HeadHunterTest.Domain.Entities
         /// Дата рождения
         /// </summary>
         [Required]
-        public DateTime DateOfBirth { get; set; }
+        public DateTimeOffset DateOfBirth { get; set; }
 
         /// <summary>
         /// Гражданство
         /// </summary>
         [Required]
+        [MaxLength(100)]
         public string Citizenship { get; set; }
+
+        /// <summary>
+        /// True = мужчина, flase = женщина
+        /// </summary>
+        public bool Sex { get; set; }
 
         /// <summary>
         /// Список резюме
@@ -37,7 +43,6 @@ namespace HeadHunterTest.Domain.Entities
         /// Иницилизация соискателя
         /// </summary>
         /// <param name="name">Имя</param>
-        /// <param name="surName">Фамилия</param>
         /// <param name="email">Email</param>
         /// <param name="phoneNumber">Номер телефона</param>
         /// <param name="passwordSalt">Солья для пароля</param>
@@ -45,13 +50,15 @@ namespace HeadHunterTest.Domain.Entities
         /// <param name="idCity">Id города</param>
         /// <param name="dateOfBirth">День рождения</param>
         /// <param name="citizenship">Гражданство</param>
-        public JobSeeker(string name, string surName, string email, string phoneNumber, string passwordSalt,
-            string passwordHash, Guid idCity, DateTime dateOfBirth, string citizenship)
-            : base(name, surName, email, phoneNumber,
+        /// <param name="isBoy"></param>
+        public JobSeeker(string name, string email, string phoneNumber, string passwordSalt,
+            string passwordHash, Guid idCity, DateTimeOffset dateOfBirth, string citizenship,bool isBoy)
+            : base(name, email, phoneNumber,
                 passwordSalt, passwordHash, RolesOptions.JobSeeker, idCity)
         {
             DateOfBirth = dateOfBirth;
             Citizenship = citizenship;
+            Sex = isBoy;
         }
     }
 }

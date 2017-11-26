@@ -155,7 +155,7 @@ namespace AstralTest.Identity
         /// <returns></returns>
         public Task<string> GetUserIdAsync(User user, CancellationToken cancellationToken)
        {
-            return Task.FromResult(user.Id.ToString());
+            return Task.FromResult(user.UserGuid.ToString());
         }
         /// <summary>
         /// Получение имени пользоваетля
@@ -196,7 +196,7 @@ namespace AstralTest.Identity
         public async Task<User> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             var guid = Guid.Parse(userId);
-            var user = await _context.Users.FirstOrDefaultAsync(a => a.Id == guid, cancellationToken);
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.UserGuid == guid, cancellationToken);
             return user;
         }
         /// <summary>

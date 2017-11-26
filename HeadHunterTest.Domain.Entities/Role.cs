@@ -14,7 +14,7 @@ namespace HeadHunterTest.Domain.Entities
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public RolesOptions Id { get; set; }
+        public RolesOptions RoleOptionId { get; set; }
 
         /// <summary>
         /// Название роли
@@ -33,7 +33,7 @@ namespace HeadHunterTest.Domain.Entities
 
         public Role(RolesOptions id, string roleName)
         {
-            Id = id;
+            RoleOptionId = id;
             RoleName = roleName;
         }
     }

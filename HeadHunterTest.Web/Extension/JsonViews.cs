@@ -20,9 +20,9 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    userId = user.Id,
+                    userId = user.UserGuid,
                     user.Name,
-                    user.PhoneNumber,
+                    PhoneNumber = user.Phone,
                     Role = nameof(user.RoleId)
                 };
             }
@@ -40,7 +40,7 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    cityId = city.Id,
+                    cityId = city.CityGuid,
                     city.Name
                 };
             }
@@ -58,7 +58,7 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    profId = prof.Id,
+                    profId = prof.ProfessionalAreaGuid,
                     prof.Name
                 };
             }
@@ -81,12 +81,12 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    resumeid = resume.Id,
-                    IdJobSeeker = resume.JobSeeker?.Id,
-                    IdCity = resume.ResumeInCity?.Id,
-                    IdProf = resume.ProfessionalArea?.Id,
+                    resumeid = resume.ResumeGuid,
+                    IdJobSeeker = resume.JobSeeker?.UserGuid,
+                    IdCity = resume.ResumeInCity?.CityGuid,
+                    IdProf = resume.ProfessionalArea?.ProfessionalAreaGuid,
                     resume.Salary,
-                    resume.DesiredPosition
+                    DesiredPosition = resume.Position
                 };
             }
             return null;
@@ -103,12 +103,12 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    resumeId = resume.Id,
+                    resumeId = resume.ResumeGuid,
                     resume.JobSeeker?.Name,
                     CityName = resume.ResumeInCity?.Name,
                     ProfName = resume.ProfessionalArea?.Name,
                     resume.Salary,
-                    resume.DesiredPosition
+                    DesiredPosition = resume.Position
                 };
             }
             return null;
@@ -125,9 +125,9 @@ namespace HeadHunterTest.Web.Extension
             {
                 return new
                 {
-                    vacancyId = vac.Id,
+                    vacancyId = vac.VacancyGuid,
                     vac.Employer?.Name,
-                    vac.Employer?.NameCompany,
+                    NameCompany = vac.Employer?.NameOfCompany,
                     vac.Description,
                     CityName = vac.VacanciesInCity?.Name
                 };

@@ -15,24 +15,7 @@ namespace HeadHunterTest.Domain.Entities
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Описание вакансии
-        /// </summary>
-        [Required]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Id города, в котором размещена вакансия
-        /// </summary>
-        [ForeignKey(nameof(VacanciesInCity))]
-        public Guid CityId { get; set; }
-
-        /// <summary>
-        /// Город, в котором размещена вакансия
-        /// </summary>
-        public City VacanciesInCity { get; set; }
+        public Guid VacancyGuid { get; set; }
 
         /// <summary>
         /// Id работодателя
@@ -41,32 +24,106 @@ namespace HeadHunterTest.Domain.Entities
         public Guid EmployerId { get; set; }
 
         /// <summary>
+        /// Id города, в котором размещено резюме
+        /// </summary>
+        [ForeignKey(nameof(VacanciesInCity))]
+        public Guid CityGuid { get; set; }
+
+        /// <summary>
+        /// Id проф. области
+        /// </summary>
+        [ForeignKey(nameof(ProfessionalArea))]
+        public Guid ProfAreaGuid { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [ForeignKey(nameof(Employment))]
+        public EmploymentOption EmploymentId { get; set; }
+
+        /// <summary>
+        /// Зарплата
+        /// </summary>
+        [Required]
+        public decimal Salary { get; set; }
+
+        /// <summary>
+        /// Должность
+        /// </summary>
+        [Required]
+        [MaxLength(100)]
+        public string Position { get; set; }
+
+        /// <summary>
+        /// Опыт работы
+        /// </summary>
+        public double WorkExpirience { get; set; }
+
+        /// <summary>
+        /// Время создания резюме
+        /// </summary>
+        public DateTimeOffset DateVacancy { get; set; }
+
+        /// <summary>
+        /// Описание вакансии
+        /// </summary>
+        [Required]
+        [MaxLength(100)]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        [MaxLength(20)]
+        public string Phone { get; set; }
+
+        /// <summary>
+        /// Проф. область
+        /// </summary>
+        public virtual ProfessionalArea ProfessionalArea { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public virtual Employment Employment { get; set; }
+
+
+        /// <summary>
+        /// Город, в котором размещена вакансия
+        /// </summary>
+        public virtual City VacanciesInCity { get; set; }
+
+
+        /// <summary>
         /// Владелец вакансии(работодатель)
         /// </summary>
-        public Employer Employer { get; set; }
+        public virtual Employer Employer { get; set; }
 
         /// <summary>
         /// Связывыает вакансию и резюме
         /// </summary>
-        public virtual List<ResumeVacancy> ResumeVacancies { get; set; }
+        public virtual List<Note> ResumeVacancies { get; set; }
 
         public Vacancy()
         {
-            Id = Guid.NewGuid();
+            VacancyGuid = Guid.NewGuid();
         }
 
-        /// <summary>
-        /// Иницилизирует новую вакансию
-        /// </summary>
-        /// <param name="employerId">Id работодателя, который размещаюет вакансию</param>
-        /// <param name="cityId">Id города, в котором размещается вакансия </param>
-        /// <param name="description">Описание вакансии</param>
-        public Vacancy(Guid employerId, Guid cityId, string description)
+        public Vacancy(Guid employerId, Guid cityGuid, Guid profAreaGuid, EmploymentOption employmentId, decimal salary,
+            string position, double workExpirience, string description, string phone)
         {
-            Id = Guid.NewGuid();
+            VacancyGuid = Guid.NewGuid();
             EmployerId = employerId;
-            CityId = cityId;
+            CityGuid = cityGuid;
+            ProfAreaGuid = profAreaGuid;
+            EmploymentId = employmentId;
+            Salary = salary;
+            Position = position;
+            WorkExpirience = workExpirience;
+            DateVacancy = DateTimeOffset.Now;
             Description = description;
+            Phone = phone;
         }
     }
 }

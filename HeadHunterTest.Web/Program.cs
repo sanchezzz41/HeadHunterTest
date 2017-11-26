@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HeadHunterTest.Database;
+using HeadHunterTest.Web.Extension;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace HeadHunterTest.Web
 {
@@ -14,7 +9,10 @@ namespace HeadHunterTest.Web
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                .MigrateDatabase<DatabaseContext>()
+                .SetUpWithService<DatabaseInitializer>(x=>x.Initialize().Wait())
+                .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

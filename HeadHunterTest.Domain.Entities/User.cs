@@ -14,23 +14,19 @@ namespace HeadHunterTest.Domain.Entities
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public Guid Id { get; set; }
+        public Guid UserGuid { get; set; }
 
         /// <summary>
         /// Имя пользователя
         /// </summary>
+        [MaxLength(100)]
         [Required]
         public string Name { get; set; }
 
         /// <summary>
-        /// Фамилия пользователя
-        /// </summary>
-        [Required]
-        public string SurName { get; set; }
-
-        /// <summary>
         /// Email пользователя
         /// </summary>
+        [MaxLength(100)]
         [Required]
         public string Email { get; set; }
 
@@ -43,14 +39,16 @@ namespace HeadHunterTest.Domain.Entities
         /// <summary>
         /// Хэш пароля
         /// </summary>
+        [MaxLength(100)]
         [Required]
         public string PasswordHash { get; set; }
 
         /// <summary>
         /// Номер телефона пользователя
         /// </summary>
+        [MaxLength(20)]
         [Required]
-        public string PhoneNumber { get; set; }
+        public string Phone { get; set; }
 
         /// <summary>
         /// Роль, к которой принадлежит пользователь
@@ -76,7 +74,7 @@ namespace HeadHunterTest.Domain.Entities
 
         public User()
         {
-            Id=Guid.NewGuid();
+            UserGuid = Guid.NewGuid();
         }
 
         /// <summary>
@@ -90,14 +88,13 @@ namespace HeadHunterTest.Domain.Entities
         /// <param name="passwordHash">Хэш пароля</param>
         /// <param name="role">Роль</param>
         /// <param name="idCity">Id города</param>
-        public User(string name, string surName, string email, string phoneNumber, string passwordSalt,
-            string passwordHash,RolesOptions role,Guid idCity)
+        public User(string name, string email, string phoneNumber, string passwordSalt,
+            string passwordHash, RolesOptions role, Guid idCity)
         {
-            Id=Guid.NewGuid();
+            UserGuid = Guid.NewGuid();
             Name = name;
-            SurName = surName;
             Email = email;
-            PhoneNumber = phoneNumber;
+            Phone = phoneNumber;
             PasswordSalt = passwordSalt;
             PasswordHash = passwordHash;
             RoleId = role;

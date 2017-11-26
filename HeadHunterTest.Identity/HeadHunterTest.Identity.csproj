@@ -6,13 +6,12 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.1" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\HeadHunterTest.Database\HeadHunterTest.Database.csproj" />
-    <ProjectReference Include="..\HeadHunterTest.Domain.Entities\HeadHunterTest.Domain.Entities.csproj" />
   </ItemGroup>
 </Project>

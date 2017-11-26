@@ -42,6 +42,8 @@ namespace HeadHunterTest.Web
 
             services.AddDomainServices();
 
+            services.AddScoped<DatabaseInitializer>();
+
             services.AddSingleton<IHashProvider, Md5HashService>();
             services.AddSingleton<IPasswordHasher<User>, Md5PasswordHasher>();
 
@@ -69,8 +71,6 @@ namespace HeadHunterTest.Web
             });
 
             app.UseMvcWithDefaultRoute();
-            //app.ApplicationServices.GetService<DatabaseContext>().Database.Migrate();
-            //app.ApplicationServices.GetService<DatabaseContext>().Initialize(app.ApplicationServices, null).Wait();
         }
     }
 }

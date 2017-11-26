@@ -15,79 +15,99 @@ namespace HeadHunterTest.Domain.Entities
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Зарплата
-        /// </summary>
-        [Required]
-        public uint Salary { get; set; }
-
-        /// <summary>
-        /// Желаемая должность
-        /// </summary>
-        [Required]
-        public string DesiredPosition { get; set; }
+        public Guid ResumeGuid { get; set; }
 
         /// <summary>
         /// Id соискателя
         /// </summary>
         [ForeignKey(nameof(JobSeeker))]
-        public Guid JobSeekerId { get; set; }
-
-        /// <summary>
-        /// Владелец резюме(соискатель)
-        /// </summary>
-        public JobSeeker JobSeeker { get; set; }
-
-        /// <summary>
-        /// Id проф. области
-        /// </summary>
-        [ForeignKey(nameof(ProfessionalArea))]
-        public Guid ProfAreaId { get; set; }
-
-        /// <summary>
-        /// Проф. область
-        /// </summary>
-        public ProfessionalArea ProfessionalArea { get; set; }
+        public Guid JobSeekerGuid { get; set; }
 
         /// <summary>
         /// Id города, в котором размещено резюме
         /// </summary>
         [ForeignKey(nameof(ResumeInCity))]
-        public Guid CityId { get; set; }
+        public Guid CityGuid { get; set; }
+
+        /// <summary>
+        /// Id проф. области
+        /// </summary>
+        [ForeignKey(nameof(ProfessionalArea))]
+        public Guid ProfAreaGuid { get; set; }
+
+        [ForeignKey(nameof(Employment))]
+        public EmploymentOption EmploymentId { get; set; }
+
+        /// <summary>
+        /// Зарплата
+        /// </summary>
+        [Required]
+        public decimal Salary { get; set; }
+
+        /// <summary>
+        /// Желаемая должность
+        /// </summary>
+        [Required]
+        [MaxLength(100)]
+        public string Position { get; set; }
+
+        /// <summary>
+        /// Опыт работы
+        /// </summary>
+        public double WorkExpirience { get; set; }
+
+        /// <summary>
+        /// Время создания резюме
+        /// </summary>
+        public DateTimeOffset DateResume { get; set; }
+
+        /// <summary>
+        /// Описание резюме
+        /// </summary>
+        [Required]
+        [MaxLength(100)]
+        public string Description { get; set; }
+        
+        /// <summary>
+        /// Владелец резюме(соискатель)
+        /// </summary>
+        public virtual JobSeeker JobSeeker { get; set; }
+
+        /// <summary>
+        /// Проф. область
+        /// </summary>
+        public virtual ProfessionalArea ProfessionalArea { get; set; }
+
 
         /// <summary>
         /// Город, в котором размещено резюме
         /// </summary>
-        public City ResumeInCity { get; set; }
+        public virtual City ResumeInCity { get; set; }
 
+        public virtual Employment Employment { get; set; }
+        
         /// <summary>
         /// Связывыает вакансию и резюме
         /// </summary>
-        public virtual List<ResumeVacancy> ResumeVacancies { get; set; }
+        public virtual List<Note> ResumeVacancies { get; set; }
 
         public Resume()
         {
-            Id = Guid.NewGuid();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="idJobSeeker">Id соискателя</param>
-        /// <param name="idCity">Id города</param>
-        /// <param name="idProfArea">Id проф. области</param>
-        /// <param name="salary">Желаемая зарплата</param>
-        /// <param name="desiredPosition">Желаемая должность</param>
-        public Resume(Guid idJobSeeker, Guid idCity, Guid idProfArea, uint salary, string desiredPosition)
+        public Resume(Guid jobSeekerGuid, Guid cityGuid, Guid profAreaGuid, EmploymentOption employmentId, decimal salary,
+            string position, double workExpirience, string description)
         {
-            Id = Guid.NewGuid();
-            JobSeekerId = idJobSeeker;
-            CityId = idCity;
-            ProfAreaId = idProfArea;
+            ResumeGuid = Guid.NewGuid();
+            JobSeekerGuid = jobSeekerGuid;
+            CityGuid = cityGuid;
+            ProfAreaGuid = profAreaGuid;
+            EmploymentId = employmentId;
             Salary = salary;
-            DesiredPosition = desiredPosition;
+            Position = position;
+            WorkExpirience = workExpirience;
+            DateResume = DateTimeOffset.Now;
+            Description = description;
         }
     }
 }

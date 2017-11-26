@@ -44,7 +44,7 @@ namespace HeadHunterTest.Domain.Services
             await _context.Cities.AddAsync(resultCity);
             await _context.SaveChangesAsync();
 
-            return resultCity.Id;
+            return resultCity.CityGuid;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace HeadHunterTest.Domain.Services
                 throw new NullReferenceException($"Ссылка на модель указывает на null.");
             }
 
-            var resultCity = await _context.Cities.SingleOrDefaultAsync(x => x.Id == id);
+            var resultCity = await _context.Cities.SingleOrDefaultAsync(x => x.CityGuid == id);
             if (resultCity == null)
             {
                 throw new NullReferenceException($"Города с {id} не существует.");
@@ -77,7 +77,7 @@ namespace HeadHunterTest.Domain.Services
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var resultCity = await _context.Cities.SingleOrDefaultAsync(x => x.Id == id);
+            var resultCity = await _context.Cities.SingleOrDefaultAsync(x => x.CityGuid == id);
             if (resultCity == null)
             {
                 throw new NullReferenceException($"Города с {id} не существует.");

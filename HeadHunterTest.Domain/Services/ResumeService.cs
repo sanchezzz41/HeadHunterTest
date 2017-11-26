@@ -39,38 +39,26 @@ namespace HeadHunterTest.Domain.Services
         /// <param name="idJobSeeker">Id соискателя, которому будет добавлено резюме</param>
         /// <param name="model">Модель содержащая данные для резюме</param>
         /// <returns></returns>
-        public async Task<Guid> AddAsync(Guid idJobSeeker, ResumeModel model)
+        public async Task<Guid> AddAsync( ResumeModel model)
         {
             if (model == null)
             {
                 throw new NullReferenceException($"Ссылка на модель указывает на null.");
             }
 
-            var resultJobSeeker = await _context.JobSeekers.SingleOrDefaultAsync(x => x.Id == idJobSeeker);
-            if (resultJobSeeker == null)
-            {
-                throw new NullReferenceException($"Соискателя с id: {idJobSeeker} не существует.");
-            }
+            var resultJobSeeker = await _context.JobSeekers.SingleAsync(x => x.UserGuid == model.JobSeekerGuid);
 
-            var resultCity = await _context.Cities.SingleOrDefaultAsync(x => x.Id == model.CityId);
-            if (resultCity == null)
-            {
-                throw new NullReferenceException($"Города с id: {model.CityId} не существует.");
-            }
+            var resultCity = await _context.Cities.SingleAsync(x => x.CityGuid == model.CityGuid);
+            
 
-            var resultProf = await _context.ProfessionalAreas.SingleOrDefaultAsync(x => x.Id == model.ProfAreaId);
-            if (resultProf == null)
-            {
-                throw new NullReferenceException($"Професии с id: {model.ProfAreaId} не существует.");
-            }
-
-            var resultResume = new Resume(idJobSeeker, resultCity.Id, resultProf.Id, model.Salary,
-                model.DesiredPosition);
-
+            var resultProf = await _context.ProfessionalAreas.SingleAsync(x => x.ProfessionalAreaGuid == model.ProfAreaGuid);
+       
+            var resultResume = new Resume(resultJobSeeker.UserGuid, resultCity.CityGuid, resultProf.ProfessionalAreaGuid, model.EmploymentId,
+                model.Salary, model.Position, model.WorkExpirience, model.Description);
             await _context.Resumes.AddAsync(resultResume);
             await _context.SaveChangesAsync();
 
-            return resultResume.Id;
+            return resultResume.ResumeGuid;
         }
 
         /// <summary>
@@ -86,28 +74,19 @@ namespace HeadHunterTest.Domain.Services
                 throw new NullReferenceException($"Ссылка на модель указывает на null.");
             }
 
-            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.Id == idResume);
-            if (resultResume == null)
-            {
-                throw new NullReferenceException($"Резюме с id: {idResume} не существует.");
-            }
+            var resultResume = await _context.Resumes.SingleAsync(x => x.ResumeGuid == idResume);
+          
+            var resultCity = await _context.Cities.SingleAsync(x => x.CityGuid == model.CityGuid);
 
-            var resultCity = await _context.Cities.SingleOrDefaultAsync(x => x.Id == model.CityId);
-            if (resultCity == null)
-            {
-                throw new NullReferenceException($"Города с id: {model.CityId} не существует.");
-            }
+            var resultProf = await _context.ProfessionalAreas.SingleAsync(x => x.ProfessionalAreaGuid == model.ProfAreaGuid);
 
-            var resultProf = await _context.ProfessionalAreas.SingleOrDefaultAsync(x => x.Id == model.ProfAreaId);
-            if (resultProf == null)
-            {
-                throw new NullReferenceException($"Професии с id: {model.ProfAreaId} не существует.");
-            }
-
-            resultResume.CityId = model.CityId;
-            resultResume.ProfAreaId = model.ProfAreaId;
-            resultResume.DesiredPosition = model.DesiredPosition;
+            resultResume.CityGuid = resultCity.CityGuid;
+            resultResume.ProfAreaGuid = resultProf.ProfessionalAreaGuid;
+            resultResume.EmploymentId = model.EmploymentId;
             resultResume.Salary = model.Salary;
+            resultResume.Description = model.Description;
+            resultResume.Position = model.Position;
+            resultResume.WorkExpirience = model.WorkExpirience;
 
             await _context.SaveChangesAsync();
         }
@@ -119,7 +98,7 @@ namespace HeadHunterTest.Domain.Services
         /// <returns></returns>
         public async Task DeleteAsync(Guid idResume)
         {
-            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.Id == idResume);
+            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.ResumeGuid == idResume);
             if (resultResume == null)
             {
                 throw new NullReferenceException($"Резюме с id: {idResume} не существует.");
@@ -151,21 +130,21 @@ namespace HeadHunterTest.Domain.Services
         /// <returns></returns>
         public async Task AffixResumeToVacancy(Guid idResume, Guid idVacancy)
         {
-            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.Id == idResume);
+            var resultResume = await _context.Resumes.SingleOrDefaultAsync(x => x.ResumeGuid == idResume);
             if (resultResume == null)
             {
                 throw new NullReferenceException($"Резюме с id: {idResume} не существует.");
             }
 
-            var resultVacancy = await _context.Vacancies.SingleOrDefaultAsync(x => x.Id == idVacancy);
+            var resultVacancy = await _context.Vacancies.SingleOrDefaultAsync(x => x.VacancyGuid == idVacancy);
             if (resultVacancy == null)
             {
                 throw new NullReferenceException($"Вакансии с id: {idVacancy} не существует.");
             }
 
-            var resultResVac = new ResumeVacancy(resultResume.Id, resultVacancy.Id);
+            var resultResVac = new Note(resultResume.ResumeGuid, resultVacancy.VacancyGuid,true);
 
-            await _context.ResumeVacancies.AddAsync(resultResVac);
+            await _context.Notes.AddAsync(resultResVac);
             await _context.SaveChangesAsync();
 
         }
@@ -177,12 +156,12 @@ namespace HeadHunterTest.Domain.Services
         /// <returns></returns>
         public async Task<List<Vacancy>> GetAttachmentsVacancies(Guid idResume)
         {
-            var listResVac = await _context.ResumeVacancies
+            var listResVac = await _context.Notes
                 .Include(x => x.Vacancy)
                 .ToListAsync();
 
             var listVacancies = listResVac
-                .Where(x => x.ResumeId == idResume)
+                .Where(x => x.ResumeGuid == idResume)
                 .Select(x=>x.Vacancy)
                 .ToList();
 

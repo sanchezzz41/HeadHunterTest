@@ -44,7 +44,7 @@ namespace HeadHunterTest.Domain.Services
             await _context.ProfessionalAreas.AddAsync(resultProf);
             await _context.SaveChangesAsync();
 
-            return resultProf.Id;
+            return resultProf.ProfessionalAreaGuid;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace HeadHunterTest.Domain.Services
                 throw new NullReferenceException($"Ссылка на модель указывает на null.");
             }
 
-            var resultProf = await _context.ProfessionalAreas.SingleOrDefaultAsync(x => x.Id == id);
+            var resultProf = await _context.ProfessionalAreas.SingleOrDefaultAsync(x => x.ProfessionalAreaGuid == id);
             if (resultProf == null)
             {
                 throw new NullReferenceException($"Професии с  таким id:{id} не существует.");
@@ -77,7 +77,7 @@ namespace HeadHunterTest.Domain.Services
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var resultProf = await _context.ProfessionalAreas.SingleOrDefaultAsync(x => x.Id == id);
+            var resultProf = await _context.ProfessionalAreas.SingleOrDefaultAsync(x => x.ProfessionalAreaGuid == id);
             if (resultProf == null)
             {
                 throw new NullReferenceException($"Професии с  таким id:{id} не существует.");

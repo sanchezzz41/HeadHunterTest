@@ -17,7 +17,6 @@ namespace HeadHunterTest.Database
         /// </summary>
         public DbSet<User> Users { get; set; }
 
-
         /// <summary>
         /// Таблица представляющая работодателей
         /// </summary>
@@ -27,7 +26,6 @@ namespace HeadHunterTest.Database
         /// Таблица представляющая вакансии от работодателей
         /// </summary>
         public DbSet<Vacancy> Vacancies { get; set; }
-
 
         /// <summary>
         /// Таблица представляющая соискателей 
@@ -39,12 +37,10 @@ namespace HeadHunterTest.Database
         /// </summary>
         public DbSet<Resume> Resumes { get; set; }
 
-
         /// <summary>
-        /// Таблица которая связывает резюме и вакансию
+        /// Таблица заметок
         /// </summary>
-        public DbSet<ResumeVacancy> ResumeVacancies { get; set; }
-
+        public DbSet<Note> Notes { get; set; }
 
         /// <summary>
         /// Таблица предоставляющая роли
@@ -57,6 +53,12 @@ namespace HeadHunterTest.Database
         public DbSet<City> Cities { get; set; }
 
         /// <summary>
+        /// Таблица предсталвющая занятости
+        /// </summary>
+        public DbSet<Employment> Employments { get; set; }
+
+
+        /// <summary>
         /// Таблица представляющая проф. области
         /// </summary>
         public DbSet<ProfessionalArea> ProfessionalAreas { get; set; }
@@ -64,7 +66,7 @@ namespace HeadHunterTest.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ResumeVacancy>().HasKey(x => new {x.ResumeId, x.VacancyId});
+            modelBuilder.Entity<Note>().HasKey(x => new {ResumeId = x.ResumeGuid, VacancyId = x.VacancyGuid,x.IsEmployer});
             base.OnModelCreating(modelBuilder);
         }
     }

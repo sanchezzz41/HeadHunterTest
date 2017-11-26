@@ -13,9 +13,10 @@ using System;
 namespace HeadHunterTest.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20171126120451_Edit_Notes")]
+    partial class Edit_Notes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +44,7 @@ namespace HeadHunterTest.Web.Migrations
 
                     b.HasKey("EmploumentId");
 
-                    b.ToTable("Employments");
+                    b.ToTable("Employment");
                 });
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.Note", b =>

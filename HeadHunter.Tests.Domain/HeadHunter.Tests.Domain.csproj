@@ -15,10 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HeadHunterTest.Database\HeadHunterTest.Database.csproj" />
-    <ProjectReference Include="..\HeadHunterTest.Domain.Entities\HeadHunterTest.Domain.Entities.csproj" />
-    <ProjectReference Include="..\HeadHunterTest.Domain\HeadHunterTest.Domain.csproj" />
-    <ProjectReference Include="..\HeadHunterTest.Identity\HeadHunterTest.Identity.csproj" />
+    <ProjectReference Include="..\HeadHunterTest.Web\HeadHunterTest.Web.csproj" />
   </ItemGroup>
 
 </Project>

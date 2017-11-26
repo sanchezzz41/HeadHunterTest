@@ -13,15 +13,15 @@ using System;
 namespace HeadHunterTest.Web.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170905131558_EditVacancy")]
-    partial class EditVacancy
+    [Migration("20171126122037_Test")]
+    partial class Test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.City", b =>
                 {
@@ -33,6 +33,35 @@ namespace HeadHunterTest.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("HeadHunterTest.Domain.Entities.Employment", b =>
+                {
+                    b.Property<int>("EmploumentId");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("EmploumentId");
+
+                    b.ToTable("Employments");
+                });
+
+            modelBuilder.Entity("HeadHunterTest.Domain.Entities.Note", b =>
+                {
+                    b.Property<Guid>("ResumeId");
+
+                    b.Property<Guid>("VacancyId");
+
+                    b.Property<bool>("IsEmployer");
+
+                    b.Property<DateTimeOffset>("CreatedTime");
+
+                    b.HasKey("ResumeId", "VacancyId", "IsEmployer");
+
+                    b.HasIndex("VacancyId");
+
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.ProfessionalArea", b =>
@@ -49,26 +78,39 @@ namespace HeadHunterTest.Web.Migrations
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.Resume", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("ResumeGuid");
 
-                    b.Property<Guid>("CityId");
+                    b.Property<Guid>("CityGuid");
 
-                    b.Property<string>("DesiredPosition")
-                        .IsRequired();
+                    b.Property<DateTimeOffset>("DateResume");
 
-                    b.Property<Guid>("JobSeekerId");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<Guid>("ProfAreaId");
+                    b.Property<int>("EmploymentId");
 
-                    b.Property<uint>("Salary");
+                    b.Property<Guid>("JobSeekerGuid");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.HasIndex("CityId");
+                    b.Property<Guid>("ProfAreaGuid");
 
-                    b.HasIndex("JobSeekerId");
+                    b.Property<decimal>("Salary");
 
-                    b.HasIndex("ProfAreaId");
+                    b.Property<double>("WorkExpirience");
+
+                    b.HasKey("ResumeGuid");
+
+                    b.HasIndex("CityGuid");
+
+                    b.HasIndex("EmploymentId");
+
+                    b.HasIndex("JobSeekerGuid");
+
+                    b.HasIndex("ProfAreaGuid");
 
                     b.ToTable("Resumes");
                 });
@@ -86,34 +128,35 @@ namespace HeadHunterTest.Web.Migrations
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("UserGuid");
 
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
                     b.Property<string>("Email")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<Guid>("IdCity");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("PasswordSalt")
                         .IsRequired();
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired();
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.Property<int>("RoleId");
 
-                    b.Property<string>("SurName")
-                        .IsRequired();
-
-                    b.HasKey("Id");
+                    b.HasKey("UserGuid");
 
                     b.HasIndex("IdCity");
 
@@ -126,20 +169,43 @@ namespace HeadHunterTest.Web.Migrations
 
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.Vacancy", b =>
                 {
-                    b.Property<Guid>("Id");
+                    b.Property<Guid>("VacancyGuid");
 
-                    b.Property<Guid>("CityId");
+                    b.Property<Guid>("CityGuid");
+
+                    b.Property<DateTimeOffset>("DateVacancy");
 
                     b.Property<string>("Description")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<Guid>("EmployerId");
 
-                    b.HasKey("Id");
+                    b.Property<int>("EmploymentId");
 
-                    b.HasIndex("CityId");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<Guid>("ProfAreaGuid");
+
+                    b.Property<decimal>("Salary");
+
+                    b.Property<double>("WorkExpirience");
+
+                    b.HasKey("VacancyGuid");
+
+                    b.HasIndex("CityGuid");
 
                     b.HasIndex("EmployerId");
+
+                    b.HasIndex("EmploymentId");
+
+                    b.HasIndex("ProfAreaGuid");
 
                     b.ToTable("Vacancies");
                 });
@@ -148,11 +214,17 @@ namespace HeadHunterTest.Web.Migrations
                 {
                     b.HasBaseType("HeadHunterTest.Domain.Entities.User");
 
-                    b.Property<string>("NameCompany")
-                        .IsRequired();
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<string>("WebSite")
-                        .IsRequired();
+                    b.Property<string>("NameOfCompany")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Site")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.ToTable("Employer");
 
@@ -164,30 +236,51 @@ namespace HeadHunterTest.Web.Migrations
                     b.HasBaseType("HeadHunterTest.Domain.Entities.User");
 
                     b.Property<string>("Citizenship")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<DateTime>("DateOfBirth");
+                    b.Property<DateTimeOffset>("DateOfBirth");
+
+                    b.Property<bool>("Sex");
 
                     b.ToTable("JobSeeker");
 
                     b.HasDiscriminator().HasValue("JobSeeker");
                 });
 
+            modelBuilder.Entity("HeadHunterTest.Domain.Entities.Note", b =>
+                {
+                    b.HasOne("HeadHunterTest.Domain.Entities.Resume", "Resume")
+                        .WithMany("ResumeVacancies")
+                        .HasForeignKey("ResumeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HeadHunterTest.Domain.Entities.Vacancy", "Vacancy")
+                        .WithMany("ResumeVacancies")
+                        .HasForeignKey("VacancyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.Resume", b =>
                 {
                     b.HasOne("HeadHunterTest.Domain.Entities.City", "ResumeInCity")
                         .WithMany("Resumes")
-                        .HasForeignKey("CityId")
+                        .HasForeignKey("CityGuid")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HeadHunterTest.Domain.Entities.Employment", "Employment")
+                        .WithMany()
+                        .HasForeignKey("EmploymentId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HeadHunterTest.Domain.Entities.JobSeeker", "JobSeeker")
                         .WithMany("Resumes")
-                        .HasForeignKey("JobSeekerId")
+                        .HasForeignKey("JobSeekerGuid")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HeadHunterTest.Domain.Entities.ProfessionalArea", "ProfessionalArea")
                         .WithMany("Resumes")
-                        .HasForeignKey("ProfAreaId")
+                        .HasForeignKey("ProfAreaGuid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -207,13 +300,23 @@ namespace HeadHunterTest.Web.Migrations
             modelBuilder.Entity("HeadHunterTest.Domain.Entities.Vacancy", b =>
                 {
                     b.HasOne("HeadHunterTest.Domain.Entities.City", "VacanciesInCity")
-                        .WithMany("Vacancieses")
-                        .HasForeignKey("CityId")
+                        .WithMany("Vacancies")
+                        .HasForeignKey("CityGuid")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HeadHunterTest.Domain.Entities.Employer", "Employer")
                         .WithMany("Vacancieses")
                         .HasForeignKey("EmployerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HeadHunterTest.Domain.Entities.Employment", "Employment")
+                        .WithMany()
+                        .HasForeignKey("EmploymentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HeadHunterTest.Domain.Entities.ProfessionalArea", "ProfessionalArea")
+                        .WithMany()
+                        .HasForeignKey("ProfAreaGuid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

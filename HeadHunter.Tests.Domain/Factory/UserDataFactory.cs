@@ -29,7 +29,7 @@ namespace HeadHunter.Tests.Domain.Factory
             var resultList = new List<User>
             {
                 new User("admin","surAdmin","admin@mail.ru","adminphone","adminSalt","adminHash",RolesOptions.Admin,city.Id),
-                new Employer("employer","surEmployer","employer@mail.com","phoneemployer","employerSalt","employerHash",city.Id,"Компания","ВебСайт"),
+                new Employer("employer","employer@mail.com","phoneemployer","employerSalt","employerHash",city.Id,"Компания","ВебСайт", TODO),
                 new JobSeeker("jobSeeker","surjobSeeker","jobSeekern@mail.ru","jobSeekerphone","jobSeekerSalt","jobSeekerHash",city.Id,DateTime.Now, "РФ")
             };
             await _context.Users.AddRangeAsync(resultList);

@@ -28,8 +28,8 @@ namespace HeadHunter.Tests.Domain.Factory
             var city = await _context.Cities.LastAsync();
             var resultList = new List<Vacancy>
             {
-                new Vacancy(emp.Id,city.Id,"Нужен IT"),
-                new Vacancy(emp.Id,city.Id,"Нужен Врач")
+                new Vacancy(emp.UserGuid,city.Id,"Нужен IT"),
+                new Vacancy(emp.UserGuid,city.Id,"Нужен Врач")
             };
             await _context.Vacancies.AddRangeAsync(resultList);
             await _context.SaveChangesAsync();

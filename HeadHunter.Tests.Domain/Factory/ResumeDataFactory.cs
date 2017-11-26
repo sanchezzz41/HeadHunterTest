@@ -29,8 +29,8 @@ namespace HeadHunter.Tests.Domain.Factory
             var profArea = await _context.ProfessionalAreas.FirstAsync();
             var resultList = new List<Resume>
             {
-                new Resume(jobSeeker.Id, city.Id, profArea.Id, 20000, "Начальник"),
-                new Resume(jobSeeker.Id, city.Id, profArea.Id, 5000, "Уборщик")
+                new Resume(jobSeeker.UserGuid, city.Id, profArea.Id, 20000, "Начальник"),
+                new Resume(jobSeeker.UserGuid, city.Id, profArea.Id, 5000, "Уборщик")
             };
             await _context.Resumes.AddRangeAsync(resultList);
             await _context.SaveChangesAsync();

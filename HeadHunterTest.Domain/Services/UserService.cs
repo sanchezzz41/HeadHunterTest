@@ -33,7 +33,6 @@ namespace HeadHunterTest.Domain.Services
         {
             _context = context;
             _passwordHasher = passwordHasher;
-            _context.Initialize(null,_passwordHasher).Wait();
         }
 
         /// <summary>
@@ -48,7 +47,7 @@ namespace HeadHunterTest.Domain.Services
             await _context.Users.AddAsync(resultUser);
             await _context.SaveChangesAsync();
 
-            return resultUser.Id;
+            return resultUser.UserGuid;
         }
 
         /// <summary>
@@ -60,14 +59,15 @@ namespace HeadHunterTest.Domain.Services
         {
             var user = await GetUser(jobSeekerModel);
 
-            var resultJobSeeker = new JobSeeker(user.Name, user.SurName, user.Email, user.PhoneNumber,
-                user.PasswordSalt, user.PasswordHash, user.IdCity,
-                jobSeekerModel.DateOfBirth, jobSeekerModel.Citizenship);
-
+            //TODO ДЕЛАТЬ
+            //var resultJobSeeker = new JobSeeker(user.Name, user.Email, user.Phone,
+            //    user.PasswordSalt, user.PasswordHash, user.IdCity,
+            //    jobSeekerModel.DateOfBirth, jobSeekerModel.Citizenship);
+            var resultJobSeeker = new JobSeeker();
             await _context.JobSeekers.AddAsync(resultJobSeeker);
             await _context.SaveChangesAsync();
 
-            return resultJobSeeker.Id;
+            return resultJobSeeker.UserGuid;
         }
 
         /// <summary>
@@ -79,14 +79,14 @@ namespace HeadHunterTest.Domain.Services
         {
             var user = await GetUser(employerModel);
 
-            var resultEmployer = new Employer(user.Name, user.SurName, user.Email, user.PhoneNumber,
+            var resultEmployer = new Employer(user.Name, user.Email, user.Phone,
                 user.PasswordSalt, user.PasswordHash, user.IdCity,
-                employerModel.NameCompany, employerModel.WebSite);
+                employerModel.NameCompany, employerModel.WebSite, null);
 
             await _context.Employers.AddAsync(resultEmployer);
             await _context.SaveChangesAsync();
 
-            return resultEmployer.Id;
+            return resultEmployer.UserGuid;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace HeadHunterTest.Domain.Services
         /// <returns></returns>
         public async Task DeleteAsync(Guid id)
         {
-            var resultUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            var resultUser = await _context.Users.SingleOrDefaultAsync(x => x.UserGuid == id);
             if (resultUser == null)
             {
                 throw new NullReferenceException($"Пользователя с {id} не существует!");
@@ -143,9 +143,9 @@ namespace HeadHunterTest.Domain.Services
             //Сначала пароль потом соль
             var passwordHash = _passwordHasher.HashPassword(null, model.Password + passwordSalt);
 
-            var resultUser = new User(model.Name, model.SurName, model.Email, model.PhoneNumber, passwordSalt,
+            var resultUser = new User(model.Name, model.Email, model.PhoneNumber, passwordSalt,
                 passwordHash,
-                model.RoleId, resultCity.Id);
+                model.RoleId, resultCity.CityGuid);
 
             return resultUser;
         }

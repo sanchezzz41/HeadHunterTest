@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterTest.Web", "HeadHunterTest.Web\HeadHunterTest.Web.csproj", "{D4DE3113-BD82-4BA5-9054-0BE88D5D08AE}"
 EndProject
@@ -12,10 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterTest.Domain", "HeadHunterTest.Domain\HeadHunterTest.Domain.csproj", "{5BFA6D6B-1A41-43B5-A483-7C0BFB8C1398}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterTest.Identity", "HeadHunterTest.Identity\HeadHunterTest.Identity.csproj", "{ACC61242-42D9-44A6-8991-306DC0F4014C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{23A3989D-DA2C-4071-A2F7-9ACD65753B27}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunter.Tests.Domain", "HeadHunter.Tests.Domain\HeadHunter.Tests.Domain.csproj", "{0C594412-681C-4759-BA05-57434FE94260}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,16 +39,9 @@ Global
 		{ACC61242-42D9-44A6-8991-306DC0F4014C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACC61242-42D9-44A6-8991-306DC0F4014C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACC61242-42D9-44A6-8991-306DC0F4014C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C594412-681C-4759-BA05-57434FE94260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C594412-681C-4759-BA05-57434FE94260}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C594412-681C-4759-BA05-57434FE94260}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C594412-681C-4759-BA05-57434FE94260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{0C594412-681C-4759-BA05-57434FE94260} = {23A3989D-DA2C-4071-A2F7-9ACD65753B27}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {01DC2148-DE63-4FBB-85F5-4ED5F310CC56}
